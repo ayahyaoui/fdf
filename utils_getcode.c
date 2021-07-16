@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 18:52:35 by anyahyao          #+#    #+#             */
-/*   Updated: 2021/07/13 21:43:10 by anyahyao         ###   ########.fr       */
+/*   Updated: 2021/07/16 22:29:51 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int		check_constante()
 	i = -1;
 	while (++i < NB_SPECIAL_KEYS && messages[i] && define_name[i]);
 
-	printf("%s %s\n", messages[i], define_name[i]);
+	//printf("%s %s\n", messages[i], define_name[i]);
 	if (i < NB_SPECIAL_KEYS || messages[i] || define_name[i])
 	{
 		printf("Erreur nombre de touches special (%d %d)\n",
@@ -105,10 +105,8 @@ int main(int argc, const char *argv[])
 		return 1;
 	mlx = initialise_specialkeys();
 	mlx_key_hook(mlx->win_ptr, get_keys, mlx);
-	printf("%s\n", messages[0]);
-	printf("%d\n", set_trgb(0,0,0,255));
 	mlx_string_put(mlx->mlx_ptr, mlx->win_ptr,
-			10, mlx->size_y / 2, set_trgb(128, 255,255, 255), (char*)messages[0]);
+		10, mlx->size_y / 2, set_trgb(128, 255,255, 255), (char*)messages[0]);
 	mlx_loop(mlx->mlx_ptr);
 
 	return 0;
