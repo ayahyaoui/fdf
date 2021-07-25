@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 17:01:23 by anyahyao          #+#    #+#             */
-/*   Updated: 2021/07/21 20:02:52 by anyahyao         ###   ########.fr       */
+/*   Updated: 2021/07/25 21:35:26 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,6 @@
 #define BUFFER_MAP  128
 #define DIMESION 2
 
-/**
- *	compte le nombre de nombre dans une string
- *
- */
 int	count_number_string(char *line)
 {
 	int		i;
@@ -120,6 +116,10 @@ t_point	**create_3d_map(t_fdf *fdf)
 	ratio_x = fdf->mlx->size_x / fdf->x_max;
 	ratio_x /= 2;
 	ratio_y /= 2;
+	// Test
+	ratio_x = 43;
+	ratio_y = 43;
+
 	map = (t_point **)malloc(sizeof(t_point *) * (fdf->y_max + 1));
 	i = 0;
 	printf("en creation\n");
@@ -179,6 +179,6 @@ t_fdf	*parsing_map(t_fdf *fdf, const char *file_name)
 	fdf->map = create_3d_map(fdf);
 	fdf->zoom = 50;
 	printf("Je vais creer une map\n");
-	dislplay_map_infos(fdf);
+	//dislplay_map_infos(fdf);
 	return (fdf);
 }

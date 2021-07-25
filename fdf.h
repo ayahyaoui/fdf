@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 20:44:06 by anyahyao          #+#    #+#             */
-/*   Updated: 2021/07/21 17:40:53 by anyahyao         ###   ########.fr       */
+/*   Updated: 2021/07/25 21:38:35 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,36 @@
 #define UNZOOM 78
 #define QUIT 12
 #define ESC 53
+/*
+** Image stuff
+*/
+
+void	*mlx_new_image(void *mlx_ptr,int width,int height);
+/*
+**  return void *0 if failed
+*/
+char	*mlx_get_data_addr(void *img_ptr, int *bits_per_pixel,
+			   int *size_line, int *endian);
+/*
+**  endian : 0 = sever X is little endian, 1 = big endian
+**  endian : useless on macos, client and graphical framework have the same endian
+*/
+int	mlx_destroy_image(void *mlx_ptr, void *img_ptr);
+/**
+ *	compte le nombre de nombre dans une string
+ *
+ */
 
 
 typedef struct		s_mlx
 {
 	void*			mlx_ptr;
 	void*			win;
-	int				size_x;
-	int				size_y;
+	void*			img;
+	char*			draw_map;
+	int				size_line;
+	int				size_x; // width
+	int				size_y; // height
 }					t_mlx;
 
 typedef struct		s_point
@@ -50,6 +72,7 @@ typedef struct		s_point
 typedef enum		e_projection
 {
 	D2,
+	ORTHO,
 	ISOMETRIC,
 	PARALLELE,
 	CONIQUE

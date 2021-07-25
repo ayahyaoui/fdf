@@ -6,20 +6,11 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 15:37:05 by anyahyao          #+#    #+#             */
-/*   Updated: 2021/07/21 19:35:59 by anyahyao         ###   ########.fr       */
+/*   Updated: 2021/07/25 21:01:50 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-void		initialise_mlx(t_mlx *mlx)
-{
-	mlx->mlx_ptr = mlx_init();
-	mlx->size_x = 2500;
-	mlx->size_y = 1200;
-	mlx->win = mlx_new_window(mlx->mlx_ptr, mlx->size_x, mlx->size_y, "fdf");
-}
-
 void		test(t_fdf *fdf)
 {
 	int x0, y0;
@@ -44,6 +35,7 @@ void		test(t_fdf *fdf)
 	draw_bressman_line(fdf, x0, x1, y0, y1);
 }
 
+void		initialise_fdf(t_fdf *fdf, t_mlx *mlx);
 
 int main(int argc, const char *argv[])
 {
@@ -56,9 +48,7 @@ int main(int argc, const char *argv[])
 		printf("Usage: ./fdf filename\n");
 		return 1;
 	}
-	bzero(&fdf, sizeof(t_fdf));
-	initialise_mlx(&mlx);
-	fdf.mlx = &mlx;
+	initialise_fdf(&fdf, &mlx);
 	parsing_map(&fdf, argv[1]);
 	printf("parsing finis\n");
 	mlx_key_hook(mlx.win, keys_action, &fdf);

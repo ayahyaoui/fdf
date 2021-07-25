@@ -6,7 +6,7 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/20 20:16:25 by anyahyao          #+#    #+#             */
-/*   Updated: 2021/07/21 20:04:13 by anyahyao         ###   ########.fr       */
+/*   Updated: 2021/07/25 21:56:31 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@ void		draw_outline(t_fdf *fdf, int x, int y,int size, int color)
 {
 	for (int i = -2; i < size; i++) 
 		for (int j = -2; j < size ;j ++)
-			mlx_pixel_put(fdf->mlx->mlx_ptr, fdf->mlx->win,
-					x + i + fdf->x_origin, y + j + fdf->y_origin, color);
+			fdf->mlx->draw_map[x + y *  fdf->mlx->size_line] = 127;
+			//mlx_pixel_put(fdf->mlx->mlx_ptr, fdf->mlx->win,
+			//		x + i + fdf->x_origin, y + j + fdf->y_origin, color);
 }
 
 
@@ -105,7 +106,7 @@ void		link_point(t_fdf *fdf)
 				draw_bressman_line(fdf, first_point->x, second_point->x,
 						first_point->y, second_point->y);
 			}
-			if (y > 0)
+			if (y > 0 && x < fdf->map[y-1][0].x)
 			{
 				first_point = &(fdf->map[y - 1][x]);
 				second_point = &(fdf->map[y][x]);
@@ -117,6 +118,20 @@ void		link_point(t_fdf *fdf)
 		y++;
 	}
 	//printf("END LINK\n");
+}
+
+void		test_drow_in_image(t_fdf *fdf)
+{
+	int i;
+	t_mlx *mlx = fdf->mlx;
+
+	for (i = 0; i < 400 ; i++) {
+		for (int j = 0 ;j < 16;j++)
+		{
+			mlx->draw_map[i * mlx->size_line + j + 151] = 127;
+		}
+	}
+	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win, mlx->img, 0, 0);
 }
 
 void		draw_origin(t_fdf *fdf)
@@ -142,9 +157,10 @@ void		draw_origin(t_fdf *fdf)
 void		process_draw(t_fdf *fdf)
 {
 	mlx_clear_window(fdf->mlx->mlx_ptr, fdf->mlx->win);
-	draw_origin(fdf);
+	test_drow_in_image(fdf);
+	//draw_origin(fdf);
 	//printf("contour finis\n");
-	link_point(fdf);
+	//link_point(fdf);
 	printf("point relier\n");
 }
 
@@ -193,7 +209,7 @@ void		change_projection(t_fdf *fdf, t_projection projection)
 	{
 		process_isometric_projection(fdf);
 		process_draw(fdf);
-		dislplay_map_infos(fdf);
+		//dislplay_map_infos(fdf);
 	}
 }
 
