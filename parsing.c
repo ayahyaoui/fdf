@@ -157,6 +157,7 @@ t_fdf	*parsing_map(t_fdf *fdf, const char *file_name)
 
 	fd = open(file_name, O_RDONLY);
 	gnl_ret = get_next_line2(fd, &line);
+
 	if (gnl_ret < 0)
 		return (0x0);
 	fdf->y_max = 1;

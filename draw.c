@@ -6,19 +6,48 @@
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/20 20:16:25 by anyahyao          #+#    #+#             */
-/*   Updated: 2021/07/25 21:56:31 by anyahyao         ###   ########.fr       */
+/*   Updated: 2021/07/25 21:58:04 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include <math.h>
+
+void		put_point_color(t_mlx *mlx, int x, int y, int color)
+{
+	//printf("point %d %d", x, y);
+	if (y >= 0 && y < mlx->size_y && x >= 0 && x < mlx->size_x)
+	{
+		mlx->draw_map[y * mlx->size_line + x * 4 ] = (color) % 256;
+		mlx->draw_map[y * mlx->size_line + x * 4 + 1] = (color >> 8) % 256;
+		mlx->draw_map[y * mlx->size_line + x * 4 + 2] = (color >> 16) % 256;
+		mlx->draw_map[y * mlx->size_line + x * 4+ 3] = (color >> 24) % 256;
+	}
+}
+
+
 void		draw_outline(t_fdf *fdf, int x, int y,int size, int color)
 {
-	for (int i = -2; i < size; i++) 
-		for (int j = -2; j < size ;j ++)
-			fdf->mlx->draw_map[x + y *  fdf->mlx->size_line] = 127;
-			//mlx_pixel_put(fdf->mlx->mlx_ptr, fdf->mlx->win,
-			//		x + i + fdf->x_origin, y + j + fdf->y_origin, color);
+	int pos_x;
+	int pos_y;
+	int i;
+	int j;
+
+	i = - size;
+	while (i < size)
+	{
+		j = -size;
+		while(j < size)
+		{
+			pos_x = x + j - fdf->x_origin;
+			pos_y = y + i - fdf->y_origin;
+			if (pos_y >= 0 && pos_y < fdf->mlx->size_y && pos_x >= 0 \
+			&& pos_x < fdf->mlx->size_x)
+				put_point_color(fdf->mlx, pos_x, pos_y, color);
+			j++;
+		}
+		i++;
+	}
 }
 
 
@@ -30,15 +59,13 @@ int			draw_vertical_line(t_fdf *fdf, int x0, int x1, int y0, int y1)
 	if (y0 < y1)
 		while(y0 < y1)
 		{
-			mlx_pixel_put(mlx->mlx_ptr, mlx->win, 
-					x0 + fdf->x_origin, y0 +  fdf->y_origin, set_b(0, 255));
+			put_point_color(mlx, x0-  fdf->x_origin, y0 - fdf->y_origin, set_b(0, 255));
 			y0++;
 		}
 	else
 		while(y0 > y1)
 		{
-			mlx_pixel_put(mlx->mlx_ptr, mlx->win,
-					x0 + fdf->x_origin, y0 + fdf->y_origin, set_b(0, 255));
+			put_point_color(mlx, x0 - fdf->x_origin, y0 - fdf->y_origin, set_b(0, 255));
 			y0--;
 		}
 	return 1;
@@ -66,8 +93,9 @@ int			draw_bressman_line(t_fdf *fdf, int x0, int x1, int y0, int y1)
 	erreur = (x1 - x0) * diff_y;
 	while(x0 < x1)
 	{
-		mlx_pixel_put(mlx->mlx_ptr, mlx->win, x0 + fdf->x_origin,
-				y0 + fdf->y_origin, set_b(0, 255));
+		put_point_color(mlx, x0 - fdf->x_origin, y0 - fdf->y_origin, set_b(0, 255));
+		//mlx_pixel_put(mlx->mlx_ptr, mlx->win, x0 + fdf->x_origin,
+		//		y0 + fdf->y_origin, set_b(0, 255));
 		erreur -= (d2y * diff_y) ;
 		while (erreur <= 0) // descendre ou monter
 		{
@@ -120,20 +148,6 @@ void		link_point(t_fdf *fdf)
 	//printf("END LINK\n");
 }
 
-void		test_drow_in_image(t_fdf *fdf)
-{
-	int i;
-	t_mlx *mlx = fdf->mlx;
-
-	for (i = 0; i < 400 ; i++) {
-		for (int j = 0 ;j < 16;j++)
-		{
-			mlx->draw_map[i * mlx->size_line + j + 151] = 127;
-		}
-	}
-	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win, mlx->img, 0, 0);
-}
-
 void		draw_origin(t_fdf *fdf)
 {
 	int			i;
@@ -141,9 +155,12 @@ void		draw_origin(t_fdf *fdf)
 	t_point		*point;
 
 	i = 0;
+
+
 	while (i < fdf->y_max)
 	{
 		j = 1;
+		
 		while (j < fdf->map[i][0].x)
 		{
 			point = &(fdf->map[i][j]);
@@ -154,18 +171,22 @@ void		draw_origin(t_fdf *fdf)
 	}
 }
 
-void		process_draw(t_fdf *fdf)
-{
+
+void        draw_menu(t_fdf *fdf);
+
+void		process_draw(t_fdf *fdf){
+	t_mlx	*mlx;
+	mlx = fdf->mlx;
 	mlx_clear_window(fdf->mlx->mlx_ptr, fdf->mlx->win);
-	test_drow_in_image(fdf);
-	//draw_origin(fdf);
-	//printf("contour finis\n");
-	//link_point(fdf);
-	printf("point relier\n");
+	bzero(mlx->draw_map, mlx->size_line * mlx->size_y);
+	draw_menu(fdf);
+	draw_origin(fdf);
+	link_point(fdf);
+	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win, mlx->img_map, mlx->width_menu, 0);
+	printf("fin process_draw\n");
 }
 
-void		process_isometric_projection(t_fdf *fdf)
-{
+void		process_isometric_projection(t_fdf *fdf){
 	int y;
 	int x;
 

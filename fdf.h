@@ -54,11 +54,16 @@ typedef struct		s_mlx
 {
 	void*			mlx_ptr;
 	void*			win;
-	void*			img;
+	void*			img_map;
 	char*			draw_map;
 	int				size_line;
 	int				size_x; // width
 	int				size_y; // height
+
+	void*			img_menu;
+	char*			draw_menu;
+	int				size_line_menu;
+	int 			width_menu;
 }					t_mlx;
 
 typedef struct		s_point

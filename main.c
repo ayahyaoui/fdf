@@ -46,10 +46,15 @@ int main(int argc, const char *argv[])
 	if (argc != 2)
 	{
 		printf("Usage: ./fdf filename\n");
-		return 1;
+		initialise_fdf(&fdf, &mlx);
+		parsing_map(&fdf, "maps/42.fdf");
+		//return 1;
 	}
-	initialise_fdf(&fdf, &mlx);
-	parsing_map(&fdf, argv[1]);
+	else
+	{
+		initialise_fdf(&fdf, &mlx);
+		parsing_map(&fdf, argv[1]);
+	}
 	printf("parsing finis\n");
 	mlx_key_hook(mlx.win, keys_action, &fdf);
 	process_draw(&fdf);

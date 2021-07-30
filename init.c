@@ -22,13 +22,18 @@ void		initialise_mlx(t_mlx *mlx)
 
 	bits_per_pixel = 0; size_line = 0; endian = 0;
 	mlx->mlx_ptr = mlx_init();
-	mlx->size_x = 2500;
+	mlx->size_x = 2000;
 	mlx->size_y = 1200;
-	mlx->win = mlx_new_window(mlx->mlx_ptr, mlx->size_x, mlx->size_y, "fdf");
-	mlx->img = mlx_new_image(mlx->mlx_ptr, mlx->size_x, mlx->size_y);
+	mlx->width_menu = mlx->size_x / 5;
+	mlx->win = mlx_new_window(mlx->mlx_ptr, mlx->size_x + mlx->width_menu, mlx->size_y, "fdf");
 
-	mlx->draw_map = mlx_get_data_addr(mlx->img, &bits_per_pixel,
+	mlx->img_map = mlx_new_image(mlx->mlx_ptr, mlx->size_x, mlx->size_y);
+	mlx->draw_map = mlx_get_data_addr(mlx->img_map, &bits_per_pixel,
 			   &(mlx->size_line), &endian);
+
+	mlx->img_menu = mlx_new_image(mlx->mlx_ptr, mlx->width_menu, mlx->size_y);
+	mlx->draw_menu = mlx_get_data_addr(mlx->img_menu, &bits_per_pixel,
+			   &(mlx->size_line_menu), &endian);
 	printf("bits_per_pixel %d size_line %d endian %d\n",
 			bits_per_pixel, size_line, endian);
 }

@@ -15,13 +15,13 @@
 int			process_key_direction(t_fdf *fdf, int key)
 {
 	if (key == RIGHT)
-		fdf->x_origin += fdf->zoom;
-	else if (key == LEFT)
 		fdf->x_origin -= fdf->zoom;
+	else if (key == LEFT)
+		fdf->x_origin += fdf->zoom;
 	else if (key == UP)
-		fdf->y_origin -= fdf->zoom;
-	else if (key == DOWN)
 		fdf->y_origin += fdf->zoom;
+	else if (key == DOWN)
+		fdf->y_origin -= fdf->zoom;
 	else
 		return (-1);
 	//printf("bouge\n");
