@@ -48,6 +48,8 @@ int			keys_action(int key, void *param)
 		return process_key_direction(fdf, key);
 	if (key == ZOOM)
 		change_projection(fdf, ISOMETRIC);
+	if (key == UNZOOM)
+		rotateX(fdf);
 	return 1;
 }
 

@@ -126,4 +126,6 @@ void		process_draw(t_fdf *fdf);
 void		change_projection(t_fdf *fdf, t_projection projection);
 void		dislplay_map_infos(t_fdf *map);
 
+void    rotateX(t_fdf   *fdf);
+
 #endif /* __FDF_H__ */

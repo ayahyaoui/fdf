@@ -57,7 +57,9 @@ int main(int argc, const char *argv[])
 	}
 	printf("parsing finis\n");
 	mlx_key_hook(mlx.win, keys_action, &fdf);
+	dislplay_map_infos(&fdf);
 	process_draw(&fdf);
+	dislplay_map_infos(&fdf);
 	//test(&fdf);
 	mlx_loop(mlx.mlx_ptr);
 
