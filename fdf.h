@@ -21,6 +21,7 @@
 #include <string.h>
 #include "libft/includes/libft.h"
 
+#define ESC 53
 #define LEFT 123
 #define RIGHT 124
 #define DOWN 125
@@ -28,7 +29,12 @@
 #define ZOOM 69
 #define UNZOOM 78
 #define QUIT 12
-#define ESC 53
+#define X_RIGHT 85
+#define X_LEFT 83
+#define Y_RIGHT 88
+#define Y_LEFT 86
+#define Z_RIGHT 92
+#define Z_LEFT 89
 /*
 ** Image stuff
 */
@@ -126,6 +132,9 @@ void		process_draw(t_fdf *fdf);
 void		change_projection(t_fdf *fdf, t_projection projection);
 void		dislplay_map_infos(t_fdf *map);
 
-void    rotateX(t_fdf   *fdf);
+void    rotateX(t_fdf   *fdf, int sens);
+void    rotateY(t_fdf   *fdf, int sens);
+void    rotateZ(t_fdf   *fdf, int sens);
+
 
 #endif /* __FDF_H__ */

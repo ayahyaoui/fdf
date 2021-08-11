@@ -12,8 +12,8 @@
 
 #include "specialkey.h"
 
-#define NB_SPECIAL_KEYS 7
-
+#define NB_SPECIAL_KEYS 13
+/*
 #define LEFT 123
 #define RIGHT 124
 #define DOWN 125
@@ -21,7 +21,7 @@
 #define ZOOM 69
 #define UNZOOM 78
 #define QUIT 12
-
+*/
 const char		*messages[NB_SPECIAL_KEYS + 1] =  {
 	"Appuie sur la fleche de gauche",
 	"Appuie sur la fleche de droite",
@@ -30,11 +30,18 @@ const char		*messages[NB_SPECIAL_KEYS + 1] =  {
 	"Choisie le boutton ZOOM",
 	"Choisie le boutton DEZOOM",
 	"Choisie le boutton QUIT",
+	"Choisie la rotation droite(X)",
+	"Choisie la rotation gauche(X)",
+	"Choisie la rotation droite(Y)",
+	"Choisie la rotation gauche(Y)",
+	"Choisie la rotation droite(Z)",
+	"Choisie la rotation gauche(Z)",
 	0x0
 	};
 
-const char		*define_name[NB_SPECIAL_KEYS + 1] =  {"LEFT", "RIGHT", "DOWN",
-										"UP", "ZOOM", "UNZOOM", "QUIT", 0x0};
+const char		*define_name[NB_SPECIAL_KEYS + 1] =  {"LEFT", "RIGHT", "DOWN", "UP",
+				 "ZOOM",  "UNZOOM", "QUIT", 
+				 "X_RIGHT", "X_LEFT", "Y_RIGHT", "Y_LEFT", "Z_RIGHT", "Z_LEFT", 0x0};
 
 t_specialkeys	*initialise_specialkeys()
 {

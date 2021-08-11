@@ -99,10 +99,20 @@ int			draw_bressman_line(t_fdf *fdf, int x0, int x1, int y0, int y1)
 		erreur -= (d2y * diff_y) ;
 		while (erreur <= 0) // descendre ou monter
 		{
+			put_point_color(mlx, x0 - fdf->x_origin, y0 - fdf->y_origin, set_b(0, 255));
 			y0+= diff_y;
 			erreur += d2x ;
 		}
 		x0++;
+	}
+	while(y0 != y1)
+	{
+		put_point_color(mlx, x0 - fdf->x_origin, y0 - fdf->y_origin, set_b(0, 255));
+		if (y0 < y1)
+			y0++;
+		else
+			y0--;
+		
 	}
 	if (ft_abs(y0 - y1) > 1)
 		printf("arrive %d vs %d diff_y %d %lu\n", y0, y1, diff_y, ft_abs(y0-y1));

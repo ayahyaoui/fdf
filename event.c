@@ -48,8 +48,13 @@ int			keys_action(int key, void *param)
 		return process_key_direction(fdf, key);
 	if (key == ZOOM)
 		change_projection(fdf, ISOMETRIC);
-	if (key == UNZOOM)
-		rotateX(fdf);
+	
+	if (key == X_RIGHT || key == X_LEFT)
+		rotateX(fdf, key == X_RIGHT ? 1 : -1);
+	if (key == Y_RIGHT || key == Y_LEFT)
+		rotateY(fdf, key == Y_RIGHT ? 1 : -1);
+	if (key == Z_RIGHT || key == Z_LEFT)
+		rotateZ(fdf, key == Z_RIGHT ? 1 : -1);		
 	return 1;
 }
 
