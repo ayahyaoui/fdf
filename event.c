@@ -15,13 +15,13 @@
 int			process_key_direction(t_fdf *fdf, int key)
 {
 	if (key == RIGHT)
-		fdf->x_origin -= fdf->zoom;
+		fdf->x_origin -= 10;//fdf->zoom;
 	else if (key == LEFT)
-		fdf->x_origin += fdf->zoom;
+		fdf->x_origin += 10;//fdf->zoom;
 	else if (key == UP)
-		fdf->y_origin += fdf->zoom;
+		fdf->y_origin += 10;//fdf->zoom;
 	else if (key == DOWN)
-		fdf->y_origin -= fdf->zoom;
+		fdf->y_origin -= 10;//fdf->zoom;
 	else
 		return (-1);
 	//printf("bouge\n");
@@ -33,7 +33,9 @@ int			keys_action(int key, void *param)
 {
 	t_fdf	*fdf;
 	t_mlx	*mlx;
+	int pas_zoom;
 
+	pas_zoom = 10;
 	fdf = (t_fdf*)param;
 	mlx = fdf->mlx;
 	if (key == QUIT || key == ESC)
@@ -47,8 +49,11 @@ int			keys_action(int key, void *param)
 	if (key == LEFT || key == RIGHT || key == UP || key == DOWN)
 		return process_key_direction(fdf, key);
 	if (key == ZOOM)
-		fdf->zoom += 10;
-	
+		fdf->zoom += pas_zoom;
+	if (key == UNZOOM && fdf->zoom > pas_zoom)
+		fdf->zoom -= pas_zoom;
+	if (key == INFOS)
+		dislplay_map_infos(fdf);
 	if (key == X_RIGHT || key == X_LEFT)
 		rotateX(fdf, key == X_RIGHT ? 1 : -1);
 	if (key == Y_RIGHT || key == Y_LEFT)

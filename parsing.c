@@ -14,7 +14,6 @@
 #include <fcntl.h>
 #include "libft/includes/libft.h"
 #define BUFFER_MAP  128
-#define DIMESION 3
 
 int	count_number_string(char *line)
 {
@@ -72,32 +71,6 @@ t_point	*convert_string_to_points(t_fdf *fdf, char *s, int y)
 	return (tab);
 }
 
-void	dislplay_map_infos(t_fdf *map)
-{
-	int		i;
-	int		j;
-
-	if (map == 0x0)
-	{
-		printf("Error: dislplay_map_infos\n");
-		return ;
-	}
-	printf("dimesion <%d, %d>\n", map->x_max, map->y_max);
-	i = -1;
-	while (++i < map->y_max)
-	{
-		for (j = 1; j < map->map[i][0].x; j++)
-		{
-			if (DIMESION > 2)
-				printf("<%3d,%3d,%3d> ", map->map[i][j].x,
-					map->map[i][j].y, map->map[i][j].z);
-			else
-				printf("<%3d,%3d> ", map->map[i][j].x,
-					map->map[i][j].y);
-		}
-		printf("\n");
-	}
-}
 
 /**
 ** change original_map
@@ -130,17 +103,19 @@ t_point	**create_3d_map(t_fdf *fdf)
 		map[i][0].x = fdf->original_map[i][0].x;
 		while (j < fdf->original_map[i][0].x)
 		{
-			map[i][j].x = fdf->mlx->size_x / 4 + j * ratio_x;
-			map[i][j].y = fdf->mlx->size_y / 4 + i * ratio_y;
-			map[i][j].z = fdf->original_map[i][j].z * 8;
+			map[i][j].x = j * 10;//fdf->mlx->size_x / 4 + j * ratio_x;
+			map[i][j].y = i * 10;//fdf->mlx->size_y / 4 + i * ratio_y;
+			map[i][j].z = fdf->original_map[i][j].z;
 			map[i][j].color = 0;
-			fdf->original_map[i][j].x = fdf->mlx->size_x / 4 + j * ratio_x;
-			fdf->original_map[i][j].y = fdf->mlx->size_y / 4 + j * ratio_y;
+			fdf->original_map[i][j].x = j *10;//fdf->mlx->size_x / 4 + j * ratio_x;
+			fdf->original_map[i][j].y = i * 10;//fdf->mlx->size_y / 4 + j * ratio_y;
 			fdf->original_map[i][j].color = 0;
 			j++;
 		}
 		i++;
 	}
+	fdf->x_origin = 0;//-fdf->mlx->size_x / 4;
+	fdf->y_origin = 0;//-fdf->mlx->size_y / 4;
 	printf("fin creation\n");
 	return (map);
 }

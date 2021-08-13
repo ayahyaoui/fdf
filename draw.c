@@ -39,8 +39,8 @@ void		draw_outline(t_fdf *fdf, int x, int y,int size, int color)
 		j = -size;
 		while(j < size)
 		{
-			pos_x = x + j - fdf->x_origin;
-			pos_y = y + i - fdf->y_origin;
+			pos_x = x + j - fdf->x_origin * fdf->zoom * fdf->zoom_x;
+			pos_y = y + i - fdf->y_origin * fdf->zoom * fdf->zoom_y;
 			if (pos_y >= 0 && pos_y < fdf->mlx->size_y && pos_x >= 0 \
 			&& pos_x < fdf->mlx->size_x)
 				put_point_color(fdf->mlx, pos_x, pos_y, color);
@@ -81,10 +81,14 @@ int			draw_bressman_line(t_fdf *fdf, int x0, int x1, int y0, int y1)
 	int		diff_y;
 	t_mlx	*mlx;
 
+	x0 -= fdf->x_origin * fdf->zoom * fdf->zoom_x;
+	x1 -= fdf->x_origin * fdf->zoom * fdf->zoom_x;
+	y0 -= fdf->y_origin * fdf->zoom * fdf->zoom_y;
+	y1 -= fdf->y_origin * fdf->zoom * fdf->zoom_y;
 	//printf("line %d %d %d %d\n", x0, x1, y0, y1);
 	mlx = fdf->mlx;
-	if (x0 == x1)
-		return draw_vertical_line(fdf, x0, x1, y0, y1);
+	//if (x0 == x1)
+	//	return draw_vertical_line(fdf, x0, x1, y0, y1);
 	if (x0 > x1)
 		return draw_bressman_line(fdf, x1, x0, y1, y0);
 	diff_y = (y0 < y1) ? 1 : -1;
@@ -93,13 +97,13 @@ int			draw_bressman_line(t_fdf *fdf, int x0, int x1, int y0, int y1)
 	erreur = (x1 - x0) * diff_y;
 	while(x0 < x1)
 	{
-		put_point_color(mlx, x0 - fdf->x_origin, y0 - fdf->y_origin, set_b(0, 255));
+		put_point_color(mlx, x0, y0, set_b(0, 255));
 		//mlx_pixel_put(mlx->mlx_ptr, mlx->win, x0 + fdf->x_origin,
 		//		y0 + fdf->y_origin, set_b(0, 255));
 		erreur -= (d2y * diff_y) ;
 		while (erreur <= 0) // descendre ou monter
 		{
-			put_point_color(mlx, x0 - fdf->x_origin, y0 - fdf->y_origin, set_b(0, 255));
+			put_point_color(mlx, x0 , y0 , set_b(0, 255));
 			y0+= diff_y;
 			erreur += d2x ;
 		}
@@ -107,7 +111,7 @@ int			draw_bressman_line(t_fdf *fdf, int x0, int x1, int y0, int y1)
 	}
 	while(y0 != y1)
 	{
-		put_point_color(mlx, x0 - fdf->x_origin, y0 - fdf->y_origin, set_b(0, 255));
+		put_point_color(mlx, x0 , y0 , set_b(0, 255));
 		if (y0 < y1)
 			y0++;
 		else
@@ -141,15 +145,15 @@ void		link_point(t_fdf *fdf)
 			{
 				first_point = &(fdf->map[y][x - 1]);
 				second_point = &(fdf->map[y][x]);
-				draw_bressman_line(fdf, first_point->x * fdf->zoom, second_point->x * fdf->zoom,
-						first_point->y * fdf->zoom, second_point->y * fdf->zoom);
+				draw_bressman_line(fdf, first_point->x * fdf->zoom * fdf->zoom_x , second_point->x * fdf->zoom * fdf->zoom_x,
+						first_point->y * fdf->zoom * fdf->zoom_y, second_point->y * fdf->zoom * fdf->zoom_y);
 			}
 			if (y > 0 && x < fdf->map[y-1][0].x)
 			{
 				first_point = &(fdf->map[y - 1][x]);
 				second_point = &(fdf->map[y][x]);
-				draw_bressman_line(fdf, first_point->x * fdf->zoom,  second_point->x  * fdf->zoom,
-						first_point->y * fdf->zoom, second_point->y * fdf->zoom);
+				draw_bressman_line(fdf, first_point->x * fdf->zoom * fdf->zoom_x,  second_point->x  * fdf->zoom * fdf->zoom_x,
+						first_point->y * fdf->zoom * fdf->zoom_y, second_point->y * fdf->zoom * fdf->zoom_y);
 			}
 			x++;
 		}
@@ -174,7 +178,7 @@ void		draw_origin(t_fdf *fdf)
 		while (j < fdf->map[i][0].x)
 		{
 			point = &(fdf->map[i][j]);
-			draw_outline(fdf, point->x, point->y, 2, set_g(0, 255));
+			draw_outline(fdf, point->x * fdf->zoom * fdf->zoom_x, point->y * fdf->zoom * fdf->zoom_y, 2, set_g(0, 255));
 			j++;
 		}
 		i++;
@@ -191,7 +195,7 @@ void		process_draw(t_fdf *fdf){
 	bzero(mlx->draw_map, mlx->size_line * mlx->size_y);
 	draw_menu(fdf);
 	draw_origin(fdf);
-	link_point(fdf);
+	//link_point(fdf);
 	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win, mlx->img_map, mlx->width_menu, 0);
 	printf("fin process_draw\n");
 }

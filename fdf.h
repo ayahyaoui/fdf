@@ -35,6 +35,7 @@
 #define Y_LEFT 86
 #define Z_RIGHT 92
 #define Z_LEFT 89
+#define INFOS 34
 /*
 ** Image stuff
 */
@@ -74,11 +75,19 @@ typedef struct		s_mlx
 
 typedef struct		s_point
 {
-	int				x;
-	int				y;
-	int				z;
+	double				x;
+	double				y;
+	double				z;
 	int				color;
 }					t_point;
+
+typedef struct 		s_rotation
+{
+	int					x;
+	int					y;
+	int					z;
+	int					pas; // pas * pi / 120
+}					t_rotation;
 
 typedef enum		e_projection
 {
@@ -94,6 +103,7 @@ typedef struct		s_fdf
 	t_point			**original_map;
 	t_point			**map;
 	t_mlx			*mlx;
+	t_rotation		angle;
 	int				y_max;
 	int				x_max;
 	int				zoom;

@@ -14,10 +14,10 @@
 #include <math.h>
 
 
-t_point     *multiply_matrix_rotation(float mat[3][3], t_point *point)
+t_point     *multiply_matrix_rotation(double mat[3][3], t_point *point)
 {
     int     old_point[3];
-    float   result[3];
+    double   result[3];
     int     i;
     int     j;
 
@@ -49,9 +49,9 @@ t_point     *multiply_matrix_rotation(float mat[3][3], t_point *point)
 
 
 
-void    rotate_pointX(t_point   *point, float theta)
+void    rotate_pointX(t_point   *point, double theta)
 {
-    float mat_rotate[3][3] =   {{1, 0, 0}, 
+    double mat_rotate[3][3] =   {{1, 0, 0}, 
                                 {0, cos(theta), -sin(theta)}, 
                                 {0, sin(theta), cos(theta)}};
     
@@ -76,10 +76,10 @@ sin     cos     0
 0       0       1
 */
 
-void    rotate_pointY(t_point   *point, float theta)
+void    rotate_pointY(t_point   *point, double theta)
 {
     //printf("angle %f\n", theta);
-    float mat_rotate[3][3] =   {{cos(theta), 0, sin(theta)}, 
+    double mat_rotate[3][3] =   {{cos(theta), 0, sin(theta)}, 
                                 {0, 1, 0}, 
                                 {-sin(theta), 0, cos(theta)}};
     
@@ -88,9 +88,9 @@ void    rotate_pointY(t_point   *point, float theta)
 }
 
 
-void    rotate_pointZ(t_point   *point, float theta)
+void    rotate_pointZ(t_point   *point, double theta)
 {
-    float mat_rotate[3][3] =   {{cos(theta), -sin(theta), 0}, 
+    double mat_rotate[3][3] =   {{cos(theta), -sin(theta), 0}, 
                                 {sin(theta), cos(theta), 0}, 
                                 {0, 0, 1}};
     
@@ -109,8 +109,8 @@ void   rotateX(t_fdf *fdf, int direction)
     //dislplay_map_infos(fdf);
     
     middle = fdf->y_max / 2;
-    center.x = fdf->map[middle][fdf->map[middle][0].x / 2].x;
-    center.y = fdf->map[middle][fdf->map[middle][0].x / 2].y;
+    center.x = fdf->map[middle][(int)(fdf->map[middle][0].x / 2)].x;
+    center.y = fdf->map[middle][(int)(fdf->map[middle][0].x / 2)].y;
     i = 0;
     while (i < fdf->y_max)
     {
@@ -123,8 +123,8 @@ void   rotateX(t_fdf *fdf, int direction)
 		}
 		i++;
     }
-    fdf->x_origin -= center.x - fdf->map[middle][fdf->map[middle][0].x / 2].x;
-    fdf->y_origin -= center.y - fdf->map[middle][fdf->map[middle][0].x / 2].y;
+    fdf->x_origin -= center.x - fdf->map[middle][(int)(fdf->map[middle][0].x / 2)].x;
+    fdf->y_origin -= center.y - fdf->map[middle][(int)(fdf->map[middle][0].x / 2)].y;
     process_draw(fdf);
 }
 
@@ -140,8 +140,8 @@ void   rotateY(t_fdf *fdf, int direction)
     //dislplay_map_infos(fdf);
     
     middle = fdf->y_max / 2;
-    center.x = fdf->map[middle][fdf->map[middle][0].x / 2].x;
-    center.y = fdf->map[middle][fdf->map[middle][0].x / 2].y;
+    center.x = fdf->map[middle][(int)(fdf->map[middle][0].x / 2)].x;
+    center.y = fdf->map[middle][(int)(fdf->map[middle][0].x / 2)].y;
     i = 0;
     while (i < fdf->y_max)
     {
@@ -154,8 +154,8 @@ void   rotateY(t_fdf *fdf, int direction)
 		}
 		i++;
     }
-    fdf->x_origin -= center.x - fdf->map[middle][fdf->map[middle][0].x / 2].x;
-    fdf->y_origin -= center.y - fdf->map[middle][fdf->map[middle][0].x / 2].y;
+    fdf->x_origin -= center.x - fdf->map[middle][(int)(fdf->map[middle][0].x / 2)].x;
+    fdf->y_origin -= center.y - fdf->map[middle][(int)(fdf->map[middle][0].x / 2)].y;
     process_draw(fdf);
 }
 
@@ -171,22 +171,33 @@ void   rotateZ(t_fdf *fdf, int direction)
     //dislplay_map_infos(fdf);
     
     middle = fdf->y_max / 2;
-    center.x = fdf->map[middle][fdf->map[middle][0].x / 2].x;
-    center.y = fdf->map[middle][fdf->map[middle][0].x / 2].y;
+    center.x = fdf->map[middle][(int)(fdf->map[middle][0].x / 2)].x;
+    center.y = fdf->map[middle][(int)(fdf->map[middle][0].x / 2)].y;
     i = 0;
+    dislplay_map_infos(fdf);
+    if (direction == 1)
+        fdf->angle.z += fdf->angle.pas;
+    else
+        fdf->angle.z -= fdf->angle.pas;
+    
     while (i < fdf->y_max)
     {
         j = 1;
 		while (j < fdf->map[i][0].x)
 		{
-			point = &(fdf->map[i][j]);
-			rotate_pointZ(point, (M_PI / 12) * direction);
-			j++;
+            fdf->map[i][j].x = fdf->original_map[i][j].x;
+            fdf->map[i][j].y = fdf->original_map[i][j].y;
+            fdf->map[i][j].z = fdf->original_map[i][j].z;
+
+			point = &(fdf->map[i][j]);            
+			rotate_pointZ(point,  (M_PI * fdf->angle.z / 120));
+
+            j++;
 		}
 		i++;
     }
 
-    fdf->x_origin -= center.x - fdf->map[middle][fdf->map[middle][0].x / 2].x;
-    fdf->y_origin -= center.y - fdf->map[middle][fdf->map[middle][0].x / 2].y;
+    fdf->x_origin -= center.x - fdf->map[middle][(int)(fdf->map[middle][0].x / 2)].x;
+    fdf->y_origin -= center.y - fdf->map[middle][(int)(fdf->map[middle][0].x / 2)].y;
     process_draw(fdf);
 }

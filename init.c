@@ -45,9 +45,10 @@ void		initialise_fdf(t_fdf *fdf, t_mlx * mlx)
 	bzero(fdf, sizeof(t_fdf));
 	initialise_mlx(mlx);
 	fdf->mlx = mlx;
-	fdf->zoom = 20;
+	fdf->zoom = 1;
 	fdf->zoom_x = 3; // Ratio 3 / 2
 	fdf->zoom_y = 2;
+	fdf->angle.pas = 10;
 }
 
 
