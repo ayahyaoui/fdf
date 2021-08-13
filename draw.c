@@ -141,15 +141,15 @@ void		link_point(t_fdf *fdf)
 			{
 				first_point = &(fdf->map[y][x - 1]);
 				second_point = &(fdf->map[y][x]);
-				draw_bressman_line(fdf, first_point->x, second_point->x,
-						first_point->y, second_point->y);
+				draw_bressman_line(fdf, first_point->x * fdf->zoom, second_point->x * fdf->zoom,
+						first_point->y * fdf->zoom, second_point->y * fdf->zoom);
 			}
 			if (y > 0 && x < fdf->map[y-1][0].x)
 			{
 				first_point = &(fdf->map[y - 1][x]);
 				second_point = &(fdf->map[y][x]);
-				draw_bressman_line(fdf, first_point->x, second_point->x,
-						first_point->y, second_point->y);
+				draw_bressman_line(fdf, first_point->x * fdf->zoom,  second_point->x  * fdf->zoom,
+						first_point->y * fdf->zoom, second_point->y * fdf->zoom);
 			}
 			x++;
 		}

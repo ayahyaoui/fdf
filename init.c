@@ -22,9 +22,9 @@ void		initialise_mlx(t_mlx *mlx)
 
 	bits_per_pixel = 0; size_line = 0; endian = 0;
 	mlx->mlx_ptr = mlx_init();
-	mlx->size_x = 2000;
-	mlx->size_y = 1200;
-	mlx->width_menu = mlx->size_x / 5;
+	mlx->size_y = 1350; // TODO adapter la taille selon l'ecran
+	mlx->size_x = mlx->size_y * 3 / 2;//2150;
+	mlx->width_menu = mlx->size_x / 4;
 	mlx->win = mlx_new_window(mlx->mlx_ptr, mlx->size_x + mlx->width_menu, mlx->size_y, "fdf");
 
 	mlx->img_map = mlx_new_image(mlx->mlx_ptr, mlx->size_x, mlx->size_y);
@@ -45,8 +45,9 @@ void		initialise_fdf(t_fdf *fdf, t_mlx * mlx)
 	bzero(fdf, sizeof(t_fdf));
 	initialise_mlx(mlx);
 	fdf->mlx = mlx;
-
-
+	fdf->zoom = 20;
+	fdf->zoom_x = 3; // Ratio 3 / 2
+	fdf->zoom_y = 2;
 }
 
 

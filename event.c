@@ -47,7 +47,7 @@ int			keys_action(int key, void *param)
 	if (key == LEFT || key == RIGHT || key == UP || key == DOWN)
 		return process_key_direction(fdf, key);
 	if (key == ZOOM)
-		change_projection(fdf, ISOMETRIC);
+		fdf->zoom += 10;
 	
 	if (key == X_RIGHT || key == X_LEFT)
 		rotateX(fdf, key == X_RIGHT ? 1 : -1);

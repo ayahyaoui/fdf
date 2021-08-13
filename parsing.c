@@ -178,7 +178,7 @@ t_fdf	*parsing_map(t_fdf *fdf, const char *file_name)
 	}
 	printf("Je vais creer une map\n");
 	fdf->map = create_3d_map(fdf);
-	fdf->zoom = 50;
+	
 	printf("Je vais creer une map\n");
 	//dislplay_map_infos(fdf);
 	return (fdf);

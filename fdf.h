@@ -97,6 +97,8 @@ typedef struct		s_fdf
 	int				y_max;
 	int				x_max;
 	int				zoom;
+	int 			zoom_x;
+	int				zoom_y;
 	int				x_origin;
 	int				y_origin;
 	t_projection	type_projection;
