@@ -51,8 +51,8 @@ t_point	*convert_string_to_points(t_fdf *fdf, char *s, int y)
 
 
 	size = count_number_string(s) + 1;
-	if (size > fdf->x_max)
-		fdf->x_max = size;
+	if (size > fdf->infos.x_max)
+		fdf->infos.x_max = size;
 	tab = (t_point *)malloc(sizeof(t_point) * (size + 1));
 	
 	number = 1;
@@ -85,20 +85,20 @@ t_point	**create_3d_map(t_fdf *fdf)
 	int			ratio_x;
 
 	printf("en creation\n");
-	ratio_y = fdf->mlx->size_y / fdf->y_max;
-	ratio_x = fdf->mlx->size_x / fdf->x_max;
+	ratio_y = fdf->mlx->size_y / fdf->infos.y_max;
+	ratio_x = fdf->mlx->size_x / fdf->infos.x_max;
 	ratio_x /= 2;
 	ratio_y /= 2;
 	// Test
 	ratio_x = 43;
 	ratio_y = 43;
 
-	map = (t_point **)malloc(sizeof(t_point *) * (fdf->y_max + 1));
+	map = (t_point **)malloc(sizeof(t_point *) * (fdf->infos.y_max + 1));
 	i = 0;
 	printf("en creation\n");
-	while (i < fdf->y_max)
+	while (i < fdf->infos.y_max)
 	{
-		map[i] = (t_point *)malloc(sizeof(t_point) * (fdf->x_max + 1));
+		map[i] = (t_point *)malloc(sizeof(t_point) * (fdf->infos.x_max + 1));
 		j = 1;
 		map[i][0].x = fdf->original_map[i][0].x;
 		while (j < fdf->original_map[i][0].x)
@@ -114,8 +114,8 @@ t_point	**create_3d_map(t_fdf *fdf)
 		}
 		i++;
 	}
-	fdf->x_origin = 0;//-fdf->mlx->size_x / 4;
-	fdf->y_origin = 0;//-fdf->mlx->size_y / 4;
+	fdf->infos.x_origin = 0;//-fdf->mlx->size_x / 4;
+	fdf->infos.y_origin = 0;//-fdf->mlx->size_y / 4;
 	printf("fin creation\n");
 	return (map);
 }
@@ -135,20 +135,20 @@ t_fdf	*parsing_map(t_fdf *fdf, const char *file_name)
 
 	if (gnl_ret < 0)
 		return (0x0);
-	fdf->y_max = 1;
+	fdf->infos.y_max = 1;
 	fdf->original_map = (t_point **) malloc(sizeof(t_point *)
 			* (BUFFER_MAP + 1));
 	fdf->original_map[0] = convert_string_to_points(fdf, line,  0);
 	while (get_next_line2(fd, &line) > 0)
 	{
-		fdf->y_max ++;
-		if (fdf->y_max % BUFFER_MAP == 0)
+		fdf->infos.y_max ++;
+		if (fdf->infos.y_max % BUFFER_MAP == 0)
 		{
 			fdf->original_map = (t_point **)realloc(fdf->original_map,
-					(fdf->y_max + BUFFER_MAP + 1) * sizeof(t_point *));
+					(fdf->infos.y_max + BUFFER_MAP + 1) * sizeof(t_point *));
 		}
-		fdf->original_map[fdf->y_max - 1] = convert_string_to_points(fdf, line,
-				 fdf->y_max);
+		fdf->original_map[fdf->infos.y_max - 1] = convert_string_to_points(fdf, line,
+				 fdf->infos.y_max);
 		free(line);
 	}
 	printf("Je vais creer une map\n");

@@ -15,17 +15,45 @@
 int			process_key_direction(t_fdf *fdf, int key)
 {
 	if (key == RIGHT)
-		fdf->x_origin -= 10;//fdf->zoom;
+		fdf->infos.x_origin -= 10;//fdf->infos.zoom;
 	else if (key == LEFT)
-		fdf->x_origin += 10;//fdf->zoom;
+		fdf->infos.x_origin += 10;//fdf->infos.zoom;
 	else if (key == UP)
-		fdf->y_origin += 10;//fdf->zoom;
+		fdf->infos.y_origin += 10;//fdf->infos.zoom;
 	else if (key == DOWN)
-		fdf->y_origin -= 10;//fdf->zoom;
+		fdf->infos.y_origin -= 10;//fdf->infos.zoom;
 	else
 		return (-1);
-	//printf("bouge\n");
 	process_draw(fdf);
+	return (1);
+}
+
+int 		process_rotation(t_fdf *fdf, int key)
+{
+	if (key == X_RIGHT || key == X_LEFT)
+		fdf->angle.x += (key == X_RIGHT) ? fdf->angle.pas : -fdf->angle.pas;
+	if (key == Y_RIGHT || key == Y_LEFT)
+		fdf->angle.y += (key == Y_RIGHT) ? fdf->angle.pas : -fdf->angle.pas;
+	if (key == Z_RIGHT || key == Z_LEFT)
+		fdf->angle.z += (key == Z_RIGHT) ? fdf->angle.pas : -fdf->angle.pas;
+
+	rotate_precision(fdf);
+	return (1);
+}
+
+int			process_zoom(t_fdf *fdf, int key)
+{
+	if (key == ZOOM)
+	{
+		fdf->infos.zoom += fdf->infos.zoom_pas;
+		process_draw(fdf);
+	}
+	if (key == UNZOOM && fdf->infos.zoom > fdf->infos.zoom_pas)
+	{
+		fdf->infos.zoom -= fdf->infos.zoom_pas;
+		process_draw(fdf);
+	}
+
 	return (1);
 }
 
@@ -35,7 +63,6 @@ int			keys_action(int key, void *param)
 	t_mlx	*mlx;
 	int pas_zoom;
 
-	pas_zoom = 10;
 	fdf = (t_fdf*)param;
 	mlx = fdf->mlx;
 	if (key == QUIT || key == ESC)
@@ -48,38 +75,14 @@ int			keys_action(int key, void *param)
 	}
 	if (key == LEFT || key == RIGHT || key == UP || key == DOWN)
 		return process_key_direction(fdf, key);
-	if (key == ZOOM)
-		fdf->zoom += pas_zoom;
-	if (key == UNZOOM && fdf->zoom > pas_zoom)
-		fdf->zoom -= pas_zoom;
+	if (key == UNZOOM || key == ZOOM)
+		return process_zoom(fdf, key);
 	if (key == INFOS)
 		dislplay_map_infos(fdf);
-	if (key == X_RIGHT || key == X_LEFT)
-		rotateX(fdf, key == X_RIGHT ? 1 : -1);
-	if (key == Y_RIGHT || key == Y_LEFT)
-		rotateY(fdf, key == Y_RIGHT ? 1 : -1);
-	if (key == Z_RIGHT || key == Z_LEFT)
-		rotateZ(fdf, key == Z_RIGHT ? 1 : -1);		
+	if (key == X_RIGHT || key == X_LEFT || key == Y_RIGHT || key == Y_LEFT || key == Z_RIGHT || key == Z_LEFT)
+		return process_rotation(fdf, key);
 	return 1;
 }
-
-
-int			test_event2(int keycode, void *param)
-{
-	t_mlx *var;
-
-	var = param;
-	printf("code events 02 (press0) vallue: %d\n", keycode);
-	
-	if (keycode == 12)
-	{
-		mlx_destroy_window(var->mlx_ptr, var->win);
-		free(var);
-		exit(0);
-	}
-	return 1;
-}
-
 
 
 

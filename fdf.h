@@ -87,6 +87,7 @@ typedef struct 		s_rotation
 	int					y;
 	int					z;
 	int					pas; // pas * pi / 120
+	int					nb_rotate;
 }					t_rotation;
 
 typedef enum		e_projection
@@ -98,19 +99,35 @@ typedef enum		e_projection
 	CONIQUE
 }					t_projection;
 
+
+
+typedef struct 		s_infos
+{
+	int				y_max;
+	int				x_max;
+	int				zoom;
+	int 			zoom_pas;
+	int 			zoom_x; // CHANGER AVEC DES DEFINE
+	int				zoom_y; // CHANGER AVEC DES DEFINE
+	int				x_origin;
+	int				y_origin;
+}					t_infos;
+
 typedef struct		s_fdf
 {
 	t_point			**original_map;
 	t_point			**map;
 	t_mlx			*mlx;
 	t_rotation		angle;
-	int				y_max;
+	t_infos			infos;
+	/*int				y_max;
 	int				x_max;
 	int				zoom;
 	int 			zoom_x;
 	int				zoom_y;
 	int				x_origin;
 	int				y_origin;
+	*/
 	t_projection	type_projection;
 }					t_fdf;
 
@@ -142,11 +159,17 @@ void		draw_origin(t_fdf *fdf);
 void		link_point(t_fdf *fdf);
 void		process_draw(t_fdf *fdf);
 void		change_projection(t_fdf *fdf, t_projection projection);
+void        draw_menu(t_fdf *fdf);
+
 void		dislplay_map_infos(t_fdf *map);
+t_point     *multiply_matrix_rotation(double mat[3][3], t_point *point);
+
 
 void    rotateX(t_fdf   *fdf, int sens);
 void    rotateY(t_fdf   *fdf, int sens);
 void    rotateZ(t_fdf   *fdf, int sens);
+void    rotate_precision(t_fdf *fdf);
 
 
+void		initialise_fdf(t_fdf *fdf, t_mlx *mlx);
 #endif /* __FDF_H__ */

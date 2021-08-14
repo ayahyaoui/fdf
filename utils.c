@@ -17,6 +17,36 @@
 
 
 
+t_point     *multiply_matrix_rotation(double mat[3][3], t_point *point)
+{
+    int     old_point[3];
+    double   result[3];
+    int     i;
+    int     j;
+
+    //printf("before %f %f %f\n", point->x, point->y, point->z);
+    i = -1;
+    old_point[0] = point->x;
+    old_point[1] = point->y;
+    old_point[2] = point->z;
+    while (++i < 3)
+        result[i] = 0.0;
+    i = -1;
+    while (++i < 3)
+    {
+        j = -1;
+        while (++j < 3)
+            result[i] += mat[i][j] * old_point[j];
+
+    }
+    point->x = result[0];
+    point->y = result[1];
+    point->z = result[2];
+    
+    
+    //printf("result %f %f %f\n", point->x, point->y, point->z);
+    return point;
+}
 
 
 void	dislplay_map_infos(t_fdf *map)
@@ -29,9 +59,9 @@ void	dislplay_map_infos(t_fdf *map)
 		printf("Error: dislplay_map_infos\n");
 		return ;
 	}
-	printf("dimesion <%d, %d>\n", map->x_max, map->y_max);
+	printf("dimesion <%d, %d>\n", map->infos.x_max, map->infos.y_max);
 	i = -1;
-	while (++i < map->y_max)
+	while (++i < map->infos.y_max)
 	{
 		for (j = 1; j < map->map[i][0].x; j++)
 		{

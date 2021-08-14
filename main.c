@@ -11,31 +11,6 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
-void		test(t_fdf *fdf)
-{
-	int x0, y0;
-	int x1, y1;
-	t_mlx	*mlx;
-	x0 = 500;
-	y0 = 200;
-
-	x1 = 600;
-	y1 = 50;
-	for (int i = -2; i < 2; i++) {
-		for (int j = -2; j < 2 ;j ++)
-		{
-			mlx_pixel_put(mlx->mlx_ptr, mlx->win, 
-					x0 + i, y0 + j, set_g(0, 255));
-			mlx_pixel_put(mlx->mlx_ptr, mlx->win, 
-					x1 + i, y1 + j, set_r(0, 255));
-		}
-	}
-	mlx_pixel_put(mlx->mlx_ptr, mlx->win, x0 - 1, y0, set_b(0, 255));
-
-	draw_bressman_line(fdf, x0, x1, y0, y1);
-}
-
-void		initialise_fdf(t_fdf *fdf, t_mlx *mlx);
 
 int main(int argc, const char *argv[])
 {
@@ -58,8 +33,6 @@ int main(int argc, const char *argv[])
 	printf("parsing finis\n");
 	mlx_key_hook(mlx.win, keys_action, &fdf);
 	process_draw(&fdf);
-	//test(&fdf);
 	mlx_loop(mlx.mlx_ptr);
-
 	return 0;
 }
