@@ -28,7 +28,7 @@ int         draw_menu_zoom(t_fdf *fdf, t_mlx *mlx, int y)
 
 int        draw_menu_projection(t_fdf *fdf, t_mlx *mlx, int y)
 {
-        printf("%d\n", fdf->type_projection);
+        //printf("%d\n", fdf->type_projection);
         mlx_string_put(mlx->mlx_ptr, mlx->win, mlx->width_menu / 5, y, set_b(0, 255), "PROJECTION");
         y += 30;
         mlx_string_put(mlx->mlx_ptr, mlx->win, mlx->width_menu / 4, y, 

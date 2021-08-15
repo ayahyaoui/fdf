@@ -134,22 +134,34 @@ void    rotate_precision(t_fdf *fdf)
         j = 1;
 		while (j < fdf->map[i][0].x)
 		{
-            fdf->map[i][j].x = fdf->original_map[i][j].x;
-            fdf->map[i][j].y = fdf->original_map[i][j].y;
-            fdf->map[i][j].z = fdf->original_map[i][j].z;
-			point = &(fdf->map[i][j]);            
+            if (1) // 1/10
+            {
+                fdf->map[i][j].x = fdf->original_map[i][j].x;
+                fdf->map[i][j].y = fdf->original_map[i][j].y;
+                fdf->map[i][j].z = fdf->original_map[i][j].z + fdf->original_map[i][j].z * fdf->infos.deep;
+			    point = &(fdf->map[i][j]);
+                rotate_point(point, (M_PI * fdf->angle.x / 120), ROTATION_X);
+                rotate_point(point, (M_PI * fdf->angle.y / 120), ROTATION_Y);
+			    rotate_point(point, (M_PI * fdf->angle.z / 120), ROTATION_Z);
+                //test(point, fdf->angle.x, fdf->angle.z, fdf->angle.y, M_PI / 120);
+            }
+            else // reste
+            {
+                
+            }
+            
             /*
             rotate_point(point,  (M_PI * fdf->angle.x / 120), ROTATION_X);
             rotate_point(point,  (M_PI * fdf->angle.y / 120), ROTATION_Y);
 			rotate_point(point,  (M_PI * fdf->angle.z / 120), ROTATION_Z);
             */
-            test(point, fdf->angle.x, fdf->angle.z, fdf->angle.y, M_PI / 120);
             j++;
 		}
 		i++;
     }
+    fdf->infos.x_origin -= center.x - fdf->map[middle][(int)(fdf->map[middle][0].x / 2)].x;
+    fdf->infos.y_origin -= center.y - fdf->map[middle][(int)(fdf->map[middle][0].x / 2)].y;
     process_draw(fdf);
-
 }
 
 /*

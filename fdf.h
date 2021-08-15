@@ -36,6 +36,8 @@
 #define Z_RIGHT 92
 #define Z_LEFT 89
 #define INFOS 34
+#define DEEPER 13
+#define SHALLOWER 7
 /*
 ** Image stuff
 */
@@ -109,8 +111,10 @@ typedef struct 		s_infos
 	int 			zoom_pas;
 	int 			zoom_x; // CHANGER AVEC DES DEFINE
 	int				zoom_y; // CHANGER AVEC DES DEFINE
-	int				x_origin;
-	int				y_origin;
+	int				statdeep;
+	double			deep_pas;
+	double			x_origin;
+	double			y_origin;
 }					t_infos;
 
 typedef struct		s_fdf
@@ -120,7 +124,8 @@ typedef struct		s_fdf
 	t_mlx			*mlx;
 	t_rotation		angle;
 	t_infos			infos;
-	/*int				y_max;
+	/*
+	int				y_max;
 	int				x_max;
 	int				zoom;
 	int 			zoom_x;

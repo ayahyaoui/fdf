@@ -127,7 +127,7 @@ void		link_point(t_fdf *fdf)
 	zoom_x = fdf->infos.zoom * fdf->infos.zoom_x;
 	zoom_y = fdf->infos.zoom * fdf->infos.zoom_y;
 	y = 0;
-	printf("zoom value %d %d\n", zoom_x, zoom_y);
+	//printf("zoom value %d %d\n", zoom_x, zoom_y);
 	while (y < fdf->infos.y_max)
 	{
 		x = 1;
@@ -172,7 +172,12 @@ void		draw_origin(t_fdf *fdf)
 		while (j < fdf->map[i][0].x)
 		{
 			point = &(fdf->map[i][j]);
-			draw_outline(fdf, point->x * fdf->infos.zoom * fdf->infos.zoom_x,
+			
+			if (i == fdf->infos.y_max / 2 && (int)(fdf->map[i][0].x / 2) == j)
+				draw_outline(fdf, point->x * fdf->infos.zoom * fdf->infos.zoom_x,
+						point->y * fdf->infos.zoom * fdf->infos.zoom_y, 2, set_r(0, 255));
+			else
+				draw_outline(fdf, point->x * fdf->infos.zoom * fdf->infos.zoom_x,
 						point->y * fdf->infos.zoom * fdf->infos.zoom_y, 2, set_g(0, 255));
 			j++;
 		}

@@ -49,6 +49,8 @@ void		initialise_fdf(t_fdf *fdf, t_mlx * mlx)
 	fdf->infos.zoom_pas = 1;
 	fdf->infos.zoom_x = 3; // Ratio 3 / 2
 	fdf->infos.zoom_y = 2;
+	fdf->infos.deep_pas = 2;
+	fdf->infos.deep = 1;
 	fdf->angle.pas = 10;
 }
 
