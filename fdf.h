@@ -170,6 +170,12 @@ typedef struct		s_map
 	int				zoom;
 }					t_map;
 
+typedef enum    e_type_rotation
+{
+    ROTATION_X, 
+    ROTATION_Y,
+    ROTATION_Z
+}               t_type_rotation;
 
 int			set_b(int trgb, int b);
 int			set_g(int trgb, int g);
@@ -198,6 +204,8 @@ t_point     *multiply_matrix_rotation(double mat[3][3], t_point *point);
 void    	rotateX(t_fdf   *fdf, int sens);
 void    	rotateY(t_fdf   *fdf, int sens);
 void    	rotateZ(t_fdf   *fdf, int sens);
+void    rotate_direction(t_fdf *fdf, t_type_rotation direction, int sens);
+
 void    	rotate_precision(t_fdf *fdf);
 double      get_proportion(t_fdf *fdf, t_option op);
 double      get_proportion(t_fdf *fdf, t_option type_infos);

@@ -30,6 +30,9 @@ int			process_key_direction(t_fdf *fdf, int key)
 
 int 		process_rotation(t_fdf *fdf, int key)
 {
+	int sens;
+	t_type_rotation type_rotation;
+
 	fdf->angle.nb_rotate += 1;
 	fdf->angle.nb_rotate %= 10;
 	if (key == X_RIGHT || key == X_LEFT)
@@ -38,11 +41,15 @@ int 		process_rotation(t_fdf *fdf, int key)
 		fdf->angle.y += (key == Y_RIGHT) ? fdf->angle.pas : -fdf->angle.pas;
 	if (key == Z_RIGHT || key == Z_LEFT)
 		fdf->angle.z += (key == Z_RIGHT) ? fdf->angle.pas : -fdf->angle.pas;
-	if (!fdf->angle.nb_rotate)
+	if (!fdf->angle.nb_rotate % 2)
 		rotate_precision(fdf);
 	else
-		rotate_precision(fdf);
-	
+	{
+		type_rotation = (key == X_RIGHT || key == X_LEFT) ? ROTATION_X : ROTATION_Z;
+		type_rotation = (key == Y_RIGHT || key == Y_LEFT) ? ROTATION_Y: ROTATION_Z;
+		sens = (key == X_RIGHT || key == Y_RIGHT || key == Z_RIGHT) ? 1 : -1;
+		rotate_direction(fdf, type_rotation, sens);
+	}
 	return (1);
 }
 
@@ -121,7 +128,6 @@ int			keys_action(int key, void *param)
 {
 	t_fdf	*fdf;
 	t_mlx	*mlx;
-	int pas_zoom;
 
 	fdf = (t_fdf*)param;
 	mlx = fdf->mlx;

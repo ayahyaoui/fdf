@@ -50,12 +50,7 @@ void    rotate_total_point(t_point *point, int a, int b, int c, double theta)
 
 
 
-typedef enum    e_type_rotation
-{
-    ROTATION_X, 
-    ROTATION_Y,
-    ROTATION_Z
-}               t_type_rotation;
+
 
 void    rotate_point(t_point    *point, double theta, t_type_rotation type_rotate)
 {
@@ -128,12 +123,11 @@ void    rotate_precision(t_fdf *fdf)
     process_draw(fdf);
 }
 
-
+// TODOOOOOOOOO
 void    rotate_direction(t_fdf *fdf, t_type_rotation direction, int sens)
 {
     int     i;
     int     j;
-    t_point *point;
     t_point center;
     int     middle;
 
@@ -145,20 +139,10 @@ void    rotate_direction(t_fdf *fdf, t_type_rotation direction, int sens)
     i = 0;
     while (i < fdf->infos.y_max)
     {
-        j = 1;
-		while (j < fdf->map[i][0].x)
-	    {
-            /*
-            fdf->map[i][j].x = fdf->original_map[i][j].x;
-            fdf->map[i][j].y = fdf->original_map[i][j].y;
-            fdf->map[i][j].z = fdf->original_map[i][j].z + fdf->original_map[i][j].z * fdf->infos.deep;
-		    point = &(fdf->map[i][j]);
-            */
-            rotate_point(point, (M_PI * fdf->angle.pas / 120 * sens), direction);
-            //rotate_point(point, (M_PI * fdf->angle.y / 120), ROTATION_Y);
-		    //rotate_point(point, (M_PI * fdf->angle.z / 120), ROTATION_Z);
-            j++;
-		}
+        j = 0;
+		while (++j < fdf->map[i][0].x)
+            rotate_point(&fdf->map[i][j], (M_PI * fdf->angle.pas / 120 * sens), direction);
+
 		i++;
     }
     fdf->infos.x_origin -= center.x - fdf->map[middle][(int)(fdf->map[middle][0].x / 2)].x;

@@ -15,7 +15,6 @@
 int main(int argc, const char *argv[])
 {
 	t_mlx	mlx;
-	t_map	map;
 	t_fdf	fdf;
 
 	if (argc != 2)
