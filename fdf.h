@@ -38,6 +38,38 @@
 #define INFOS 34
 #define DEEPER 13
 #define SHALLOWER 7
+
+#define GRID_SIZE 30
+#define GRID_NB 20
+#define SIZE_BUTTON 65
+#define BUTTON_LEFT_W 45
+#define BUTTON_RIGHT_W 65
+#define GRADUATION_SIZE 5
+#define GRADUATION_BACKGROUND_COLOR 8355711
+#define SIZE_HEIGHT 1350
+
+typedef enum       e_menu
+{
+    NOTHING,
+    TITLE,
+    SUB_TITLE,
+    GRADUATION
+}                  t_menu;
+
+typedef enum       e_option
+{
+    EMPTY,
+    PROJECTION_TYPE,
+    ZOOM_STEP,
+    ROTATION_STEP,
+	MOVE_STEP,
+	DEPTH_STEP,
+	PROJECTION_ORTHO,
+	PROJECTION_ISOMETRIC,
+	PROJECTION_PARALLELE
+}                  t_option;
+
+
 /*
 ** Image stuff
 */
@@ -111,7 +143,8 @@ typedef struct 		s_infos
 	int 			zoom_pas;
 	int 			zoom_x; // CHANGER AVEC DES DEFINE
 	int				zoom_y; // CHANGER AVEC DES DEFINE
-	int				statdeep;
+	int				deep;
+	double			step_size;
 	double			deep_pas;
 	double			x_origin;
 	double			y_origin;
@@ -124,16 +157,8 @@ typedef struct		s_fdf
 	t_mlx			*mlx;
 	t_rotation		angle;
 	t_infos			infos;
-	/*
-	int				y_max;
-	int				x_max;
-	int				zoom;
-	int 			zoom_x;
-	int				zoom_y;
-	int				x_origin;
-	int				y_origin;
-	*/
 	t_projection	type_projection;
+	int				*button_grad_y;
 }					t_fdf;
 
 typedef struct		s_map
@@ -170,11 +195,14 @@ void		dislplay_map_infos(t_fdf *map);
 t_point     *multiply_matrix_rotation(double mat[3][3], t_point *point);
 
 
-void    rotateX(t_fdf   *fdf, int sens);
-void    rotateY(t_fdf   *fdf, int sens);
-void    rotateZ(t_fdf   *fdf, int sens);
-void    rotate_precision(t_fdf *fdf);
-
+void    	rotateX(t_fdf   *fdf, int sens);
+void    	rotateY(t_fdf   *fdf, int sens);
+void    	rotateZ(t_fdf   *fdf, int sens);
+void    	rotate_precision(t_fdf *fdf);
+double      get_proportion(t_fdf *fdf, t_option op);
+double      get_proportion(t_fdf *fdf, t_option type_infos);
 
 void		initialise_fdf(t_fdf *fdf, t_mlx *mlx);
+int 		mouse_event(int button, int x, int y, void *param);
+
 #endif /* __FDF_H__ */

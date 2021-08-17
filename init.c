@@ -22,7 +22,7 @@ void		initialise_mlx(t_mlx *mlx)
 
 	bits_per_pixel = 0; size_line = 0; endian = 0;
 	mlx->mlx_ptr = mlx_init();
-	mlx->size_y = 1350; // TODO adapter la taille selon l'ecran
+	mlx->size_y = SIZE_HEIGHT; // TODO adapter la taille selon l'ecran
 	mlx->size_x = mlx->size_y * 3 / 2;//2150;
 	mlx->width_menu = mlx->size_x / 4;
 	mlx->win = mlx_new_window(mlx->mlx_ptr, mlx->size_x + mlx->width_menu, mlx->size_y, "fdf");
@@ -51,6 +51,9 @@ void		initialise_fdf(t_fdf *fdf, t_mlx * mlx)
 	fdf->infos.zoom_y = 2;
 	fdf->infos.deep_pas = 2;
 	fdf->infos.deep = 1;
+	fdf->infos.step_size = 10;
 	fdf->angle.pas = 10;
+	fdf->type_projection = PARALLELE;
+
 }
 

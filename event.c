@@ -15,13 +15,13 @@
 int			process_key_direction(t_fdf *fdf, int key)
 {
 	if (key == RIGHT)
-		fdf->infos.x_origin -= 10;//fdf->infos.zoom;
+		fdf->infos.x_origin -= fdf->infos.step_size;//fdf->infos.zoom;
 	else if (key == LEFT)
-		fdf->infos.x_origin += 10;//fdf->infos.zoom;
+		fdf->infos.x_origin += fdf->infos.step_size;//fdf->infos.zoom;
 	else if (key == UP)
-		fdf->infos.y_origin += 10;//fdf->infos.zoom;
+		fdf->infos.y_origin += fdf->infos.step_size;//fdf->infos.zoom;
 	else if (key == DOWN)
-		fdf->infos.y_origin -= 10;//fdf->infos.zoom;
+		fdf->infos.y_origin -= fdf->infos.step_size;//fdf->infos.zoom;
 	else
 		return (-1);
 	process_draw(fdf);
@@ -30,14 +30,19 @@ int			process_key_direction(t_fdf *fdf, int key)
 
 int 		process_rotation(t_fdf *fdf, int key)
 {
+	fdf->angle.nb_rotate += 1;
+	fdf->angle.nb_rotate %= 10;
 	if (key == X_RIGHT || key == X_LEFT)
 		fdf->angle.x += (key == X_RIGHT) ? fdf->angle.pas : -fdf->angle.pas;
 	if (key == Y_RIGHT || key == Y_LEFT)
 		fdf->angle.y += (key == Y_RIGHT) ? fdf->angle.pas : -fdf->angle.pas;
 	if (key == Z_RIGHT || key == Z_LEFT)
 		fdf->angle.z += (key == Z_RIGHT) ? fdf->angle.pas : -fdf->angle.pas;
-
-	rotate_precision(fdf);
+	if (!fdf->angle.nb_rotate)
+		rotate_precision(fdf);
+	else
+		rotate_precision(fdf);
+	
 	return (1);
 }
 
@@ -52,14 +57,23 @@ int			process_zoom(t_fdf *fdf, int key)
     center.x = fdf->map[middle][(int)(fdf->map[middle][0].x / 2)].x * fdf->infos.zoom * fdf->infos.zoom_x - (fdf->infos.x_origin * fdf->infos.zoom * fdf->infos.zoom_x);
     center.y = fdf->map[middle][(int)(fdf->map[middle][0].x / 2)].y * fdf->infos.zoom * fdf->infos.zoom_y - (fdf->infos.y_origin * fdf->infos.zoom * fdf->infos.zoom_y);
 	//printf("first point before %f %f %d\n", center.x, fdf->infos.x_origin * fdf->infos.zoom * fdf->infos.zoom_x, (int)(fdf->map[0][0].x * fdf->infos.zoom * fdf->infos.zoom_x - (fdf->infos.x_origin * fdf->infos.zoom * fdf->infos.zoom_x)));
-	if (key == ZOOM)
+	if (key == ZOOM && fdf->infos.zoom * fdf->infos.zoom_y * fdf->infos.step_size < SIZE_HEIGHT)
 	{
 		fdf->infos.zoom += fdf->infos.zoom_pas;
+		if (fdf->infos.zoom * fdf->infos.zoom_y * fdf->infos.step_size> SIZE_HEIGHT)
+			fdf->infos.zoom = SIZE_HEIGHT / (fdf->infos.zoom_y * fdf->infos.step_size);
+		if (fdf->infos.zoom * fdf->infos.zoom_y * fdf->infos.step_size >= SIZE_HEIGHT -2)
+			fdf->infos.step_size = SIZE_HEIGHT / (fdf->infos.zoom_y * fdf->infos.zoom) - 1;
+		printf("zoom == %d step == %f total == %f\n", fdf->infos.zoom, fdf->infos.step_size, fdf->infos.zoom * fdf->infos.zoom_y * fdf->infos.step_size);
 		process_draw(fdf);
 	}
-	if (key == UNZOOM && fdf->infos.zoom > fdf->infos.zoom_pas)
+	if (key == UNZOOM )
 	{
-		fdf->infos.zoom -= fdf->infos.zoom_pas;
+		if (fdf->infos.zoom <= fdf->infos.zoom_pas)
+			fdf->infos.zoom = 1;
+		else
+			fdf->infos.zoom -= fdf->infos.zoom_pas;
+		
 		process_draw(fdf);
 	}
 	pos_x =  (fdf->map[middle][(int)(fdf->map[middle][0].x / 2)].x * fdf->infos.zoom * fdf->infos.zoom_x) - (fdf->infos.x_origin * fdf->infos.zoom * fdf->infos.zoom_x);
@@ -95,18 +109,10 @@ int 		process_deep(t_fdf *fdf, int key)
 		i++;
     }
 	if (key == DEEPER)
-	{
-		fdf->infos.deep ++; //#fdf->infos.deep_pas;
-		//if (fdf->infos.deep == 0)
-		//	fdf->infos.deep = 1;
-	}
+		fdf->infos.deep += fdf->infos.deep_pas;
 	else
-	{
-		fdf->infos.deep--;// /= fdf->infos.deep_pas;
-	}
-	printf("Profondeur ajouter %d\n", fdf->infos.deep);
+		fdf->infos.deep -= fdf->infos.deep_pas;
 	rotate_precision(fdf);
-	//process_draw(fdf);
 	return (1);
 }
 
@@ -124,6 +130,7 @@ int			keys_action(int key, void *param)
 		printf("Merci.\n");
 		mlx_destroy_window(mlx->mlx_ptr, mlx->win);
 		free(mlx->mlx_ptr); 
+		free(fdf->button_grad_y);
 		//free(mlx);
 		exit(0);
 	}
