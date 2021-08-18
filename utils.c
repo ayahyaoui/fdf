@@ -15,39 +15,31 @@
 #define BUFFER_MAP  128
 #define DIMESION 3
 
-
-
-t_point     *multiply_matrix_rotation(double mat[3][3], t_point *point)
+t_point	*multiply_matrix_rotation(double mat[3][3], t_point *point)
 {
-    int     old_point[3];
-    double   result[3];
-    int     i;
-    int     j;
+	int		old_point[3];
+	double	result[3];
+	int		i;
+	int		j;
 
-    //printf("before %f %f %f\n", point->x, point->y, point->z);
-    i = -1;
-    old_point[0] = point->x;
-    old_point[1] = point->y;
-    old_point[2] = point->z;
-    while (++i < 3)
-        result[i] = 0.0;
-    i = -1;
-    while (++i < 3)
-    {
-        j = -1;
-        while (++j < 3)
-            result[i] += mat[i][j] * old_point[j];
-
-    }
-    point->x = result[0];
-    point->y = result[1];
-    point->z = result[2];
-    
-    
-    //printf("result %f %f %f\n", point->x, point->y, point->z);
-    return point;
+	i = -1;
+	old_point[0] = point->x;
+	old_point[1] = point->y;
+	old_point[2] = point->z;
+	while (++i < 3)
+		result[i] = 0.0;
+	i = -1;
+	while (++i < 3)
+	{
+		j = -1;
+		while (++j < 3)
+			result[i] += mat[i][j] * old_point[j];
+	}
+	point->x = result[0];
+	point->y = result[1];
+	point->z = result[2];
+	return (point);
 }
-
 
 void	dislplay_map_infos(t_fdf *map)
 {
@@ -63,7 +55,8 @@ void	dislplay_map_infos(t_fdf *map)
 	i = -1;
 	while (++i < map->infos.y_max)
 	{
-		for (j = 1; j < map->map[i][0].x; j++)
+		j = 0;
+		while (++j < map->map[i][0].x)
 		{
 			if (DIMESION > 2)
 				printf("<%3.2f,%3.2f,%3.2f> ", map->map[i][j].x,

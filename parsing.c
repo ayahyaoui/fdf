@@ -15,6 +15,11 @@
 #include "libft/includes/libft.h"
 #define BUFFER_MAP  128
 
+/*
+*	TODO deplacer la fonction autre par
+*	count_number_string 
+*		renvois: le nombre de nombre dans la string
+**/
 int	count_number_string(char *line)
 {
 	int		i;
@@ -49,12 +54,10 @@ t_point	*convert_string_to_points(t_fdf *fdf, char *s, int y)
 	int			number;
 	int			size;
 
-
 	size = count_number_string(s) + 1;
 	if (size > fdf->infos.x_max)
 		fdf->infos.x_max = size;
-	tab = (t_point *)malloc(sizeof(t_point) * (size + 1));
-	
+	tab = (t_point *)ft_memmalloc(sizeof(t_point) * (size + 1));
 	number = 1;
 	i = 0;
 	tab[0].z = size;
@@ -71,58 +74,43 @@ t_point	*convert_string_to_points(t_fdf *fdf, char *s, int y)
 	return (tab);
 }
 
-
 /**
 ** change original_map
 ** change les malloc par memalloc 
 */
-t_point	**create_3d_map(t_fdf *fdf)
+t_point	**create_3d_map(t_fdf *fdf, t_img *img)
 {
 	t_point		**map;
 	int			i;
 	int			j;
-	int			ratio_y;
-	int			ratio_x;
 
-	printf("en creation\n");
-	ratio_y = fdf->mlx->size_y / fdf->infos.y_max;
-	ratio_x = fdf->mlx->size_x / fdf->infos.x_max;
-	ratio_x /= 2;
-	ratio_y /= 2;
-	// Test
-	ratio_x = 43;
-	ratio_y = 43;
-
-	map = (t_point **)malloc(sizeof(t_point *) * (fdf->infos.y_max + 1));
+	map = (t_point **)ft_memmalloc(sizeof(t_point *) * (fdf->infos.y_max + 1));
 	i = 0;
-	printf("en creation\n");
 	while (i < fdf->infos.y_max)
 	{
-		map[i] = (t_point *)malloc(sizeof(t_point) * (fdf->infos.x_max + 1));
-		j = 1;
+		map[i] = ft_memmalloc(sizeof(t_point) * (fdf->infos.x_max + 1));
+		j = 0;
 		map[i][0].x = fdf->original_map[i][0].x;
-		while (j < fdf->original_map[i][0].x)
+		while (++j < fdf->original_map[i][0].x)
 		{
-			map[i][j].x = j * 10;//fdf->mlx->size_x / 4 + j * ratio_x;
-			map[i][j].y = i * 10;//fdf->mlx->size_y / 4 + i * ratio_y;
+			map[i][j].x = j * 10;
+			map[i][j].y = i * 10;
 			map[i][j].z = fdf->original_map[i][j].z;
-			map[i][j].color = 0;
-			fdf->original_map[i][j].x = j *10;//fdf->mlx->size_x / 4 + j * ratio_x;
-			fdf->original_map[i][j].y = i * 10;//fdf->mlx->size_y / 4 + j * ratio_y;
-			fdf->original_map[i][j].color = 0;
-			j++;
+			fdf->original_map[i][j].x = j * 10;
+			fdf->original_map[i][j].y = i * 10;
 		}
 		i++;
 	}
-	fdf->infos.x_origin = 0;//-fdf->mlx->size_x / 4;
-	fdf->infos.y_origin = 0;//-fdf->mlx->size_y / 4;
-	printf("fin creation\n");
+	fdf->infos.x_origin = 0;
+	fdf->infos.y_origin = 0;
+	printf("main img created\n");
 	return (map);
 }
 
 /*
  *	Suppose que le fichier contient une matrice de int
- *
+ * ..
+ * 
  */
 t_fdf	*parsing_map(t_fdf *fdf, const char *file_name)
 {
@@ -132,29 +120,22 @@ t_fdf	*parsing_map(t_fdf *fdf, const char *file_name)
 
 	fd = open(file_name, O_RDONLY);
 	gnl_ret = get_next_line2(fd, &line);
-
 	if (gnl_ret < 0)
 		return (0x0);
 	fdf->infos.y_max = 1;
-	fdf->original_map = (t_point **) malloc(sizeof(t_point *)
+	fdf->original_map = (t_point **) ft_memmalloc(sizeof(t_point *)
 			* (BUFFER_MAP + 1));
-	fdf->original_map[0] = convert_string_to_points(fdf, line,  0);
+	fdf->original_map[0] = convert_string_to_points(fdf, line, 0);
 	while (get_next_line2(fd, &line) > 0)
 	{
 		fdf->infos.y_max ++;
 		if (fdf->infos.y_max % BUFFER_MAP == 0)
-		{
 			fdf->original_map = (t_point **)realloc(fdf->original_map,
 					(fdf->infos.y_max + BUFFER_MAP + 1) * sizeof(t_point *));
-		}
-		fdf->original_map[fdf->infos.y_max - 1] = convert_string_to_points(fdf, line,
-				 fdf->infos.y_max);
+		fdf->original_map[fdf->infos.y_max - 1] = convert_string_to_points
+			(fdf, line, fdf->infos.y_max);
 		free(line);
 	}
-	printf("Je vais creer une map\n");
-	fdf->map = create_3d_map(fdf);
-	
-	printf("Je vais creer une map\n");
-	//dislplay_map_infos(fdf);
+	fdf->map = create_3d_map(fdf, fdf->mlx->main_img);
 	return (fdf);
 }

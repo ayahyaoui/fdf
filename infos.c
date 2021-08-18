@@ -27,3 +27,18 @@ double      get_proportion(t_fdf *fdf, t_option type_infos)
         return ((double)(fdf->angle.pas - ROTATION_STEP_MIN) / (ROTATION_STEP_MAX - ROTATION_STEP_MIN));
     return (0.5);
 }
+
+
+t_point     get_pixel_center(t_fdf *fdf)
+{
+    t_point center;
+    int     middle;
+
+    middle = fdf->infos.y_max / 2;
+    center.x = (fdf->map[middle][(int)(fdf->map[middle][0].x / 2)].x * fdf->infos.zoom * fdf->infos.zoom_x) - (fdf->infos.x_origin * fdf->infos.zoom * fdf->infos.zoom_x);
+    center.y = (fdf->map[middle][(int)(fdf->map[middle][0].x / 2)].y * fdf->infos.zoom * fdf->infos.zoom_y) - (fdf->infos.y_origin * fdf->infos.zoom * fdf->infos.zoom_y);
+    center.z = 0;
+    //pos_x =  fdf->map[middle][(int)(fdf->map[middle][0].x / 2)].x * fdf->infos.zoom * fdf->infos.zoom_x - (fdf->infos.x_origin * fdf->infos.zoom * fdf->infos.zoom_x);
+	//pos_y =  (fdf->map[middle][(int)(fdf->map[middle][0].x / 2)].y * zoom) - (fdf->infos.y_origin * fdf->infos.zoom * fdf->infos.zoom_y);
+    return center;
+}
