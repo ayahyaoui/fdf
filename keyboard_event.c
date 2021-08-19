@@ -50,10 +50,12 @@ int	process_rotation(t_fdf *fdf, int key)
 		type_rotation = ROTATION_Y;
 	if (key == Z_RIGHT || key == Z_LEFT)
 		type_rotation = ROTATION_Z;
+	printf("start calculate rotation\n");
 	if (!fdf->angle.nb_rotate % 2 || 1)
 		rotate_precision(fdf);
 	else
 		rotate_direction(fdf, type_rotation, sens);
+	printf("rotation calculated\n");
 	return (1);
 }
 
@@ -138,7 +140,7 @@ int	keys_action(int key, void *param)
 	if (key == UNZOOM || key == ZOOM)
 		return (process_zoom(fdf, key));
 	if (key == INFOS)
-		dislplay_map_infos(fdf);
+		display_fdfinfos(fdf);
 	if (key == X_RIGHT || key == X_LEFT || key == Y_RIGHT || key == Y_LEFT
 		|| key == Z_RIGHT || key == Z_LEFT)
 		return (process_rotation(fdf, key));

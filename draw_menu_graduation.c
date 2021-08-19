@@ -18,29 +18,31 @@ void	draw_graduation(t_fdf *fdf, int pos_y, int lim_y, t_option option)
 	int		start_x;
 	int		j;
 	double	proportion;
-	t_mlx	*mlx;
+	t_img	*img;
 
-	mlx = fdf->mlx;
+	img = fdf->mlx->menu_img;
 	proportion = get_proportion(fdf, option);
-	start_x = (int)((double)(BUTTON_LEFT_W + mlx->width_menu / 20)*4);
+	start_x = (int)((double)(BUTTON_LEFT_W + img->width / 20)*4);
 	while (pos_y < lim_y)
 	{
 		j = 0;
-		while (j < ((mlx->width_menu * 8 / 3) - start_x) * proportion)
+		while (j < ((img->width * 8 / 3) - start_x) * proportion)
 		{
-			put_point_menu_color(mlx, (start_x + j) / 4, pos_y, set_g(0, 255));
+			put_point_color(img->img_ptr, (start_x + j) / 4, pos_y,
+				set_g(0, 255));
 			j += 4;
 		}
-		while (j < (mlx->width_menu * 8 / 3) - start_x)
+		while (j < (img->width * 8 / 3) - start_x)
 		{
-			put_point_menu_color(mlx, (start_x + j) / 4, pos_y, GRAD_BACK_COL);
+			put_point_color(img->img_ptr, (start_x + j) / 4, pos_y,
+				GRAD_BACK_COL);
 			j += 4;
 		}
 		pos_y++;
 	}
 }
 
-void	draw_menu_graduation(t_fdf *fdf, t_mlx *mlx, const t_menu *type,
+void	draw_menu_graduation(t_fdf *fdf, t_img *img, const t_menu *type,
 	const t_option options[])
 {
 	int	index;
@@ -59,34 +61,37 @@ void	draw_menu_graduation(t_fdf *fdf, t_mlx *mlx, const t_menu *type,
 		if (type[index] == GRADUATION)
 		{
 			if (add_pos)
-				fdf->button_grad_y[graduation_index++] = index * mlx->size_y
+				fdf->button_grad_y[graduation_index++] = index * img->height
 					/ GRID_SIZE;
-			draw_graduation(fdf, index * mlx->size_y / GRID_SIZE,
-				(index + 1) * mlx->size_y / GRID_SIZE, options[index]);
+			draw_graduation(fdf, index * img->height / GRID_SIZE,
+				(index + 1) * img->height / GRID_SIZE, options[index]);
 			index++;
 		}
 	}
 }
 
-int	put_graduation(t_fdf *fdf, char title_minus[], char title_plus[], int y)
+int	put_graduation(t_fdf *fdf, char title_min[], char title_plus[], int y)
 {
-	int		w;
-	int		h;
-	void	*minus;
-	void	*plus;
-	t_mlx	*mlx;
+	static void		*minus = NULL;
+	static void		*plus = NULL;
+	t_mlx			*mlx;
+	int				w;
+	int				h;
 
 	mlx = fdf->mlx;
-	plus = mlx_xpm_file_to_image(mlx->mlx_ptr, (char *)title_plus, &w, &h);
-	minus = mlx_xpm_file_to_image(mlx->mlx_ptr, (char *)title_minus, &w, &h);
 	if (!minus || !plus)
-		printf("NOOOOOO CRASH image non trou %s, %s\n", title_plus, title_minus);
+	{
+		plus = mlx_xpm_file_to_image(mlx->mlx_ptr, (char *)title_plus, &w, &h);
+		minus = mlx_xpm_file_to_image(mlx->mlx_ptr, (char *)title_min, &w, &h);
+	}
+	if (!minus || !plus)
+		printf("NOOOOOO CRASH image non trou %s, %s\n", title_plus, title_min);
 	else
 	{
 		mlx_put_image_to_window(mlx->mlx_ptr, mlx->win, plus,
-			mlx->width_menu * 2 / 3, y - 10);
+			mlx->menu_img->width * 2 / 3, y - 10);
 		mlx_put_image_to_window(mlx->mlx_ptr, mlx->win, minus,
-			mlx->width_menu / 20, y);
+			mlx->menu_img->width / 20, y);
 	}
 	return (1);
 }

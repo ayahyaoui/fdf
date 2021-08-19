@@ -73,25 +73,3 @@ int set_trgb(int t, int r, int g, int b)
 	b %= 256;
 	return ((t << 24) + (r << 16) + (g << 8) + b);
 }
-
-/*
-int main(int argc, const char *argv[])
-{
-	int t = 12, r = 45, g = 84,b = 34;
-	int trgb = 0;
-
-	trgb = set_t(trgb, t);
-	trgb = set_r(trgb, r);
-	trgb = set_g(trgb, g);
-	trgb = set_b(trgb, b);
-
-	if (t != get_t(trgb) || g != get_g(trgb) ||
-	r != get_r(trgb) || b != get_b(trgb) )
-		printf("Failed%d::, %d %d    %d %d\n", trgb,
-		t, get_t(trgb) >> 24, r, get_r(trgb) );
-	else
-		printf("Success\n");
-	return 0;
-} 
-
-*/

@@ -13,13 +13,6 @@
 #include "fdf.h"
 #include <math.h>
 
-
-
-
-
-
-
-
 /*
 Rotate X
 1       0       0
@@ -46,11 +39,6 @@ void    rotate_total_point(t_point *point, int a, int b, int c, double theta)
 
      point = multiply_matrix_rotation(matrix_rotation, point);
 }
-        
-
-
-
-
 
 void    rotate_point(t_point    *point, double theta, t_type_rotation type_rotate)
 {
@@ -75,22 +63,6 @@ void    rotate_point(t_point    *point, double theta, t_type_rotation type_rotat
         printf("Rotattion %d inconnue\n", type_rotate);
     
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 void    rotate_precision(t_fdf *fdf)
 {
@@ -120,6 +92,7 @@ void    rotate_precision(t_fdf *fdf)
     }
     fdf->infos.x_origin -= center.x - fdf->map[middle][(int)(fdf->map[middle][0].x / 2)].x;
     fdf->infos.y_origin -= center.y - fdf->map[middle][(int)(fdf->map[middle][0].x / 2)].y;
+    printf("finish calcul\n");
     process_draw(fdf);
 }
 

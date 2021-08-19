@@ -65,9 +65,9 @@ void	link_points(t_fdf *fdf)
 		while (x < fdf->map[y][0].x)
 		{
 			if (x > 1)
-				link_point(fdf, fdf->map[y][x - 1], fdf->map[y][x - 1]);
+				link_point(fdf, fdf->map[y][x - 1], fdf->map[y][x]);
 			if (y > 0 && x < fdf->map[y - 1][0].x)
-				link_point(fdf, fdf->map[y - 1][x], fdf->map[y][x - 1]);
+				link_point(fdf, fdf->map[y - 1][x], fdf->map[y][x]);
 			x++;
 		}
 		y++;
@@ -104,7 +104,8 @@ void	draw_origin(t_fdf *fdf)
 
 void	draw_main_img(t_fdf *fdf, t_img *img)
 {
-	bzero(img, img->size_line * img->height);
+	bzero(img->draw_map, img->size_line * img->height);
 	draw_origin(fdf);
 	link_points(fdf);
+	
 }

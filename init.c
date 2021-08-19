@@ -17,12 +17,14 @@ t_img	*initialise_img(t_img *img, int width, void *mlx_ptr)
 	int	bits_per_pixel;
 	int	endian;
 
+
 	bzero(img, sizeof(t_img));
 	img->height = SIZE_HEIGHT;
 	img->width = width;
 	img->img_ptr = mlx_new_image(mlx_ptr, img->width, img->height);
 	img->draw_map = mlx_get_data_addr(img->img_ptr, &bits_per_pixel,
 			&(img->size_line), &endian);
+	return img;
 }
 
 	/*
@@ -43,13 +45,9 @@ t_img	*initialise_img(t_img *img, int width, void *mlx_ptr)
 	*/
 t_mlx	*initialise_mlx(t_mlx *mlx, t_img *main, t_img *menu)
 {
-	int	bits_per_pixel;
-	int	size_line;
-	int	endian;
-
 	mlx->mlx_ptr = mlx_init();
 	main = initialise_img(main, SIZE_HEIGHT * 3 / 2, mlx->mlx_ptr);
-	menu = initialise_img(main, main->width / 4, mlx->mlx_ptr);
+	menu = initialise_img(menu, main->width / 4, mlx->mlx_ptr);
 	mlx->win = mlx_new_window(mlx->mlx_ptr, main->width + menu->width,
 			SIZE_HEIGHT, "FDF");
 	mlx->main_img = main;

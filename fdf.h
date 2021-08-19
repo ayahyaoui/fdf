@@ -26,11 +26,10 @@
 typedef struct 		s_img
 {
 	char*			draw_map;
-	void*			img_ptr;
+	void*			img_ptr; //img_map
 	int				width;
 	int				height;
 	int				size_line;
-
 }					t_img;
 
 
@@ -157,9 +156,13 @@ int 		mouse_event(int button, int x, int y, void *param);
 
 
 int         put_graduation(t_fdf *fdf, char title_minus[], char title_plus[], int y);
-void		draw_menu_graduation(t_fdf *fdf, t_mlx *mlx, const t_menu *type, const t_option options[]);
+void		draw_menu_graduation(t_fdf *fdf, t_img *img, const t_menu *type, const t_option options[]);
 void		draw_graduation(t_fdf *fdf, int pos_y, int lim_y, t_option option);
 
-void		put_point_menu_color(t_mlx *mlx, int x, int y, int color);
+void		put_point_color(t_img *img, int x, int y, int color);
+void	draw_main_img(t_fdf *fdf, t_img *img);
+void	display_fdfinfos(t_fdf *fdf);
+
+//void		put_point_menu_color(t_mlx *mlx, int x, int y, int color);
 
 #endif /* __FDF_H__ */

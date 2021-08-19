@@ -34,6 +34,7 @@ int main(int argc, const char *argv[])
 	printf("parsing finis\n");
 	mlx_key_hook(mlx.win, keys_action, &fdf);
 	mlx_mouse_hook(mlx.win, mouse_event, &fdf);
+	display_fdfinfos(&fdf);
 	process_draw(&fdf);
 	mlx_loop(mlx.mlx_ptr);
 	return 0;

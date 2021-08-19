@@ -57,7 +57,7 @@ t_point	*convert_string_to_points(t_fdf *fdf, char *s, int y)
 	size = count_number_string(s) + 1;
 	if (size > fdf->infos.x_max)
 		fdf->infos.x_max = size;
-	tab = (t_point *)ft_memmalloc(sizeof(t_point) * (size + 1));
+	tab = (t_point *)ft_memalloc(sizeof(t_point) * (size + 1));
 	number = 1;
 	i = 0;
 	tab[0].z = size;
@@ -84,11 +84,11 @@ t_point	**create_3d_map(t_fdf *fdf, t_img *img)
 	int			i;
 	int			j;
 
-	map = (t_point **)ft_memmalloc(sizeof(t_point *) * (fdf->infos.y_max + 1));
+	map = (t_point **)ft_memalloc(sizeof(t_point *) * (fdf->infos.y_max + 1));
 	i = 0;
 	while (i < fdf->infos.y_max)
 	{
-		map[i] = ft_memmalloc(sizeof(t_point) * (fdf->infos.x_max + 1));
+		map[i] = ft_memalloc(sizeof(t_point) * (fdf->infos.x_max + 1));
 		j = 0;
 		map[i][0].x = fdf->original_map[i][0].x;
 		while (++j < fdf->original_map[i][0].x)
@@ -123,7 +123,7 @@ t_fdf	*parsing_map(t_fdf *fdf, const char *file_name)
 	if (gnl_ret < 0)
 		return (0x0);
 	fdf->infos.y_max = 1;
-	fdf->original_map = (t_point **) ft_memmalloc(sizeof(t_point *)
+	fdf->original_map = (t_point **) ft_memalloc(sizeof(t_point *)
 			* (BUFFER_MAP + 1));
 	fdf->original_map[0] = convert_string_to_points(fdf, line, 0);
 	while (get_next_line2(fd, &line) > 0)
