@@ -12,28 +12,20 @@
 
 #include "fdf.h"
 
-
-int main(int argc, const char *argv[])
+int	main(int argc, const char *argv[])
 {
 	t_mlx	mlx;
 	t_fdf	fdf;
 	t_img	menu_img;
 	t_img	main_img;
-	t_fdf	*verif;
 
 	if (argc != 2)
 	{
 		printf("Usage: ./fdf filename\n");
-		initialise_fdf(&fdf, &mlx, &main_img, &menu_img);
-		verif = parsing_map(&fdf, "maps/42.fdf");
-		//return 1;
+		return (1);
 	}
-	else
-	{
-		initialise_fdf(&fdf, &mlx, &main_img, &menu_img);
-		verif = parsing_map(&fdf, argv[1]);
-	}
-	if (!verif)
+	initialise_fdf(&fdf, &mlx, &main_img, &menu_img);
+	if (!parsing_map(&fdf, argv[1]))
 	{
 		printf("FDF: bad format\n");
 		return (1);
@@ -42,5 +34,5 @@ int main(int argc, const char *argv[])
 	mlx_mouse_hook(mlx.win, mouse_event, &fdf);
 	process_draw(&fdf);
 	mlx_loop(mlx.mlx_ptr);
-	return 0;
+	return (0);
 }

@@ -101,5 +101,4 @@ void	process_draw(t_fdf *fdf)
 	draw_main_img(fdf, mlx->main_img);
 	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win, mlx->main_img->img_ptr,
 		mlx->menu_img->width, 0);
-
 }

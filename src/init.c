@@ -67,5 +67,5 @@ void	initialise_fdf(t_fdf *fdf, t_mlx *mlx, t_img *main, t_img *menu)
 	fdf->infos.deep = 1;
 	fdf->infos.step_size = 10;
 	fdf->angle.pas = 10;
-	fdf->type_projection = ORTHO;
+	fdf->type_projection = PARALLELE;
 }

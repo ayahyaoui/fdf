@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 #include <fcntl.h>
-#include "libft/includes/libft.h"
+
 #define BUFFER_MAP  128
 #define SPACE_X 2
 #define SPACE_Y 2
@@ -75,17 +75,20 @@ t_point	*convert_string_to_points(t_fdf *fdf, char *s, int y)
 	return (tab);
 }
 
-void center_map(t_fdf *fdf)
+void	center_map(t_fdf *fdf)
 {
-	double range_w;
-	double range_h;
+	double	range_w;
+	double	range_h;
 
 	range_w = fdf->infos.x_max * SPACE_X * fdf->infos.zoom_x * fdf->infos.zoom;
 	range_h = fdf->infos.y_max * SPACE_Y * fdf->infos.zoom_y * fdf->infos.zoom;
-	if (range_w < fdf->mlx->main_img->width && range_h < fdf->mlx->main_img->height)
+	if (range_w < fdf->mlx->main_img->width
+		&& range_h < fdf->mlx->main_img->height)
 	{
-		fdf->infos.x_origin = -(fdf->mlx->main_img->width - range_w) / (2 * fdf->infos.zoom_x * fdf->infos.zoom);
-		fdf->infos.y_origin = -(fdf->mlx->main_img->height - range_h) / (2 * fdf->infos.zoom_y * fdf->infos.zoom);
+		fdf->infos.x_origin = -(fdf->mlx->main_img->width - range_w)
+			/ (2 * fdf->infos.zoom_x * fdf->infos.zoom);
+		fdf->infos.y_origin = -(fdf->mlx->main_img->height - range_h)
+			/ (2 * fdf->infos.zoom_y * fdf->infos.zoom);
 	}
 }
 

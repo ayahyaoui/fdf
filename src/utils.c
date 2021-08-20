@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include "libft/includes/libft.h"
+
 #define BUFFER_MAP  128
 #define DIMESION 3
 

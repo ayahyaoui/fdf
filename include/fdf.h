@@ -19,7 +19,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "libft/includes/libft.h"
+#include "../libft/includes/libft.h"
 #include "constante.h"
 #include <math.h>
 
@@ -62,10 +62,10 @@ typedef struct 		s_rotation
 
 typedef enum		e_projection
 {
+	PARALLELE,
+	ISOMETRIC,
 	D2,
 	ORTHO,
-	ISOMETRIC,
-	PARALLELE,
 	CONIQUE
 }					t_projection;
 

@@ -61,6 +61,24 @@ t_point	get_pixel_center(t_fdf *fdf)
 	return (center);
 }
 
+void	display_angleinfos(t_fdf *fdf, t_infos *infos)
+{
+	printf("zoom map (%d, %d)\n", infos->zoom, infos->zoom_pas);
+	printf("depth map (%d, %.2f)\n", infos->deep, infos->deep_pas);
+	printf("Rotation: (x, y, z, step) (%d, %d, %d, %d)\n",
+		fdf->angle.x, fdf->angle.y, fdf->angle.z, fdf->angle.pas);
+	if (fdf->type_projection == PARALLELE)
+		printf("The projection is PARALLELE\n");
+	if (fdf->type_projection == ISOMETRIC)
+		printf("The projection is ISOMETRIC\n");
+	if (fdf->type_projection == CONIQUE)
+		printf("The projection is CONIQUE\n");
+	if (fdf->type_projection == ORTHO)
+		printf("The projection is ORTHO\n");
+	if (DEBUG == 1)
+		dislplay_map_infos(fdf);
+}
+
 void	display_fdfinfos(t_fdf *fdf)
 {
 	t_mlx	*mlx;
@@ -73,10 +91,14 @@ void	display_fdfinfos(t_fdf *fdf)
 	main_img = mlx->main_img;
 	menu_img = mlx->menu_img;
 	printf("Infos:\n dimension map (%d, %d)\n", infos->x_max, infos->y_max);
-	printf("original pos (%.2f, %.2f)\n", infos->x_origin, infos->y_origin);
-	printf("main img (w, h, s_l)(%d, %d, %d)\n", main_img->width, main_img->height, main_img->size_line);
-	printf("menu img (w, h, s_l)(%d, %d, %d)\n", menu_img->width, menu_img->height, menu_img->size_line);
-	if (!menu_img->img_ptr || !menu_img->draw_map || !main_img->img_ptr || !main_img->draw_map)
+	printf("original pos (%.2f, %.2f)\n",
+		infos->x_origin, infos->y_origin);
+	printf("main img (w, h, s_l)(%d, %d, %d)\n",
+		main_img->width, main_img->height, main_img->size_line);
+	printf("menu img (w, h, s_l)(%d, %d, %d)\n",
+		menu_img->width, menu_img->height, menu_img->size_line);
+	if (!menu_img->img_ptr || !menu_img->draw_map || !main_img->img_ptr
+		|| !main_img->draw_map)
 		printf(" Issue with (main or menu) img null pointer\n");
 	else
 		printf("main img and menu_img seems fine\n");
@@ -84,17 +106,4 @@ void	display_fdfinfos(t_fdf *fdf)
 		printf("Issue with (mlx or window) null pointer\n");
 	else
 		printf("mlx ptr seems fine\n");
-	printf("zoom map (%d, %d)\n", infos->zoom, infos->zoom_pas);
-	printf("depth map (%d, %.2f)\n", infos->deep, infos->deep_pas);
-	printf("Rotation: (x, y, z, step) (%d, %d, %d, %d)\n", fdf->angle.x, fdf->angle.y, fdf->angle.z, fdf->angle.pas);
-	if (fdf->type_projection == PARALLELE)
-		printf("The projection is PARALLELE\n");
-	if (fdf->type_projection == ISOMETRIC)
-		printf("The projection is ISOMETRIC\n");
-	if (fdf->type_projection == CONIQUE)
-		printf("The projection is CONIQUE\n");
-	if (fdf->type_projection == ORTHO)
-		printf("The projection is ORTHO\n");
-	if (DEBUG == 1)
-		dislplay_map_infos(fdf);
 }

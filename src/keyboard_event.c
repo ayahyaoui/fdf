@@ -15,10 +15,10 @@
 
 int	process_key_direction(t_fdf *fdf, int key)
 {
-	int direction;
+	int		direction;
 
 	direction = 1;
-	if (fdf->infos.x_max < 420 || fdf->infos.y_max < 420) 
+	if (fdf->infos.x_max < 420 || fdf->infos.y_max < 420)
 		direction = -1;
 	if (key == RIGHT)
 		fdf->infos.x_origin += fdf->infos.step_size * direction;

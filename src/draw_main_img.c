@@ -42,31 +42,23 @@ void	link_point(t_fdf *fdf, t_point first, t_point second)
 {
 	int			zoom_x;
 	int			zoom_y;
-	t_point		first_point;
-	t_point		second_point;
 	int			diff_y;
 
 	zoom_x = fdf->infos.zoom * fdf->infos.zoom_x;
 	zoom_y = fdf->infos.zoom * fdf->infos.zoom_y;
-	first_point.x = (int)(first.x * zoom_x - fdf->infos.x_origin * zoom_x);
-	first_point.y = (int)(first.y * zoom_y - fdf->infos.y_origin * zoom_y);
-	second_point.x = (int)(second.x * zoom_x - fdf->infos.x_origin * zoom_x);
-	second_point.y = (int)(second.y * zoom_y - fdf->infos.y_origin * zoom_y);
+	first.x = (int)(first.x * zoom_x - fdf->infos.x_origin * zoom_x);
+	first.y = (int)(first.y * zoom_y - fdf->infos.y_origin * zoom_y);
+	second.x = (int)(second.x * zoom_x - fdf->infos.x_origin * zoom_x);
+	second.y = (int)(second.y * zoom_y - fdf->infos.y_origin * zoom_y);
 	diff_y = 1;
-	if (first_point.y > second_point.y)
+	if (first.y > second.y)
 		diff_y = -1;
-	if (first.color == second.color)
+	if (first.color != second.color)
 	{
-		first_point.color = first.color;
-		second_point.color = first.color;
+		first.color = get_color_height(0);
+		second.color = get_color_height(0);
 	}	
-	else
-	{
-		first_point.color = get_color_height(0);
-		second_point.color = get_color_height(0);
-	}
-	
-	draw_bressman_line(fdf->mlx->main_img, first_point, second_point, diff_y);
+	draw_bressman_line(fdf->mlx->main_img, first, second, diff_y);
 }
 
 void	link_points(t_fdf *fdf)
@@ -94,7 +86,7 @@ void	link_points(t_fdf *fdf)
  *
  * else
  *	p.color = set_g(0, 255);
- *
+ * 
  * */
 void	draw_origin(t_fdf *fdf)
 {
@@ -112,13 +104,12 @@ void	draw_origin(t_fdf *fdf)
 			point = &(fdf->map[i][j]);
 			p.x = point->x * fdf->infos.zoom * fdf->infos.zoom_x;
 			p.y = point->y * fdf->infos.zoom * fdf->infos.zoom_y;
-			point->color = get_color_height(fdf->original_map[i][j].z +
-						fdf->original_map[i][j].z * fdf->infos.deep);
+			point->color = get_color_height(fdf->original_map[i][j].z
+					+ fdf->original_map[i][j].z * fdf->infos.deep);
 			if (i == fdf->infos.y_max / 2 && (int)(fdf->map[i][0].x / 2) == j
 				&& COLORS_CENTER)
-				p.color = set_r(0, 255);
-			else
-				p.color = point->color;
+				point->color = set_r(0, 255);
+			p.color = point->color;
 			draw_outline(fdf->infos, fdf->mlx->main_img, p, THICKNESS);
 			j++;
 		}
@@ -129,7 +120,6 @@ void	draw_origin(t_fdf *fdf)
 void	draw_main_img(t_fdf *fdf, t_img *img)
 {
 	bzero(img->draw_map, img->size_line * img->height);
-	
 	draw_origin(fdf);
 	link_points(fdf);
 }

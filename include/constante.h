@@ -24,7 +24,7 @@
 #define NEXT_PROJECTION 45
 
 #define GRID_SIZE 30
-#define GRID_NB 20
+#define GRID_NB 19
 #define SIZE_BUTTON 65
 #define BUTTON_LEFT_W 45
 #define BUTTON_RIGHT_W 65
