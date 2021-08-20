@@ -14,7 +14,8 @@
 #include <fcntl.h>
 #include "libft/includes/libft.h"
 #define BUFFER_MAP  128
-
+#define SPACE_X 2
+#define SPACE_Y 2
 /*
 *	TODO deplacer la fonction autre par
 *	count_number_string 
@@ -74,6 +75,20 @@ t_point	*convert_string_to_points(t_fdf *fdf, char *s, int y)
 	return (tab);
 }
 
+void center_map(t_fdf *fdf)
+{
+	double range_w;
+	double range_h;
+
+	range_w = fdf->infos.x_max * SPACE_X * fdf->infos.zoom_x * fdf->infos.zoom;
+	range_h = fdf->infos.y_max * SPACE_Y * fdf->infos.zoom_y * fdf->infos.zoom;
+	if (range_w < fdf->mlx->main_img->width && range_h < fdf->mlx->main_img->height)
+	{
+		fdf->infos.x_origin = -(fdf->mlx->main_img->width - range_w) / (2 * fdf->infos.zoom_x * fdf->infos.zoom);
+		fdf->infos.y_origin = -(fdf->mlx->main_img->height - range_h) / (2 * fdf->infos.zoom_y * fdf->infos.zoom);
+	}
+}
+
 /**
 ** change original_map
 ** change les malloc par memalloc 
@@ -93,17 +108,15 @@ t_point	**create_3d_map(t_fdf *fdf, t_img *img)
 		map[i][0].x = fdf->original_map[i][0].x;
 		while (++j < fdf->original_map[i][0].x)
 		{
-			map[i][j].x = j * 10;
-			map[i][j].y = i * 10;
+			map[i][j].x = j * SPACE_X;
+			map[i][j].y = i * SPACE_Y;
 			map[i][j].z = fdf->original_map[i][j].z;
-			fdf->original_map[i][j].x = j * 10;
-			fdf->original_map[i][j].y = i * 10;
+			fdf->original_map[i][j].x = j * SPACE_X;
+			fdf->original_map[i][j].y = i * SPACE_Y;
 		}
 		i++;
 	}
-	fdf->infos.x_origin = 0;
-	fdf->infos.y_origin = 0;
-	printf("main img created\n");
+	center_map(fdf);
 	return (map);
 }
 

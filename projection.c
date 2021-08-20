@@ -4,41 +4,29 @@
 /*
 							TODO procees projction
 */
-void		process_isometric_projection(t_fdf *fdf){
-	int y;
-	int x;
+void	process_isometric_projection(t_fdf *fdf){
+	int	y;
+	int	x;
 
 	y = 0;
-	printf("iso start\n");
 	while (y < fdf->infos.y_max)
 	{
 		x = 1;
 		while (x < fdf->map[y][0].x)
 		{
-/*
-			fdf->map[y][x].x = (int)((fdf->original_map[y][x].x -
-					fdf->original_map[y][x].z) / ((double)sqrt(2)));
-			fdf->map[y][x].y = (int)((fdf->original_map[y][x].x +
-			2 * fdf->original_map[y][x].y + fdf->original_map[y][x].z) /
-					((double)sqrt(6)));
-*/
 			double tmp_x = (double)((fdf->map[y][x].x -fdf->map[y][x].z) /
 					((double)sqrt(2)));
 			double tmp_y = (double)((fdf->map[y][x].x +2 * fdf->map[y][x].y +
 					fdf->map[y][x].z) / ((double)sqrt(6)));
-			//printf("%d->%f\n", fdf->map[y][x].x, tmp_x);
 			fdf->map[y][x].y = (int)tmp_y;
 			fdf->map[y][x].x = (int)tmp_x;
-
 			x++;
 		}
 		y++;
 	}
-	printf("iso finsh\n");
 }
 
-
-void		change_projection(t_fdf *fdf, t_projection projection)
+void	change_projection(t_fdf *fdf, t_projection projection)
 {
 	if (projection == fdf->type_projection)
 	{
@@ -52,4 +40,24 @@ void		change_projection(t_fdf *fdf, t_projection projection)
 	}
 }
 
+int			process_next_projection(t_fdf *fdf)
+{
+	fdf->angle.x = 0;
+	fdf->angle.y = 0;
+	fdf->angle.z = 0;
 
+	if (fdf->type_projection == ISOMETRIC)
+	{
+		fdf->type_projection = PARALLELE;
+	}
+	else if (fdf->type_projection == ORTHO)
+	{
+		fdf->type_projection = ISOMETRIC;
+	}
+	else
+	{
+		fdf->type_projection = ORTHO;
+	}
+	rotate_precision(fdf);
+	return (1);
+}

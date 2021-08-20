@@ -21,6 +21,7 @@
 #define INFOS 34
 #define DEEPER 13
 #define SHALLOWER 7
+#define NEXT_PROJECTION 45
 
 #define GRID_SIZE 30
 #define GRID_NB 20

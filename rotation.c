@@ -90,9 +90,10 @@ void    rotate_precision(t_fdf *fdf)
 		}
 		i++;
     }
+    if (fdf->type_projection == ISOMETRIC)
+		transform_isometric_map(fdf);
     fdf->infos.x_origin -= center.x - fdf->map[middle][(int)(fdf->map[middle][0].x / 2)].x;
     fdf->infos.y_origin -= center.y - fdf->map[middle][(int)(fdf->map[middle][0].x / 2)].y;
-    printf("finish calcul\n");
     process_draw(fdf);
 }
 

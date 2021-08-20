@@ -21,6 +21,7 @@
 #include <string.h>
 #include "libft/includes/libft.h"
 #include "constante.h"
+#include <math.h>
 
 
 typedef struct 		s_img
@@ -40,18 +41,6 @@ typedef struct		s_mlx
 
 	t_img*			main_img;
 	t_img*			menu_img;
-	/*
-	void*			img_map;
-	char*			draw_map;
-	int				size_line;
-	int				size_x; // width
-	int				size_y; // height
-
-	void*			img_menu;
-	char*			draw_menu;
-	int				size_line_menu;
-	int 			width_menu;
-	*/
 }					t_mlx;
 
 typedef struct		s_point
@@ -116,6 +105,7 @@ typedef struct		s_map
 	int				zoom;
 }					t_map;
 
+int 		get_color_height(float height);
 
 int			set_b(int trgb, int b);
 int			set_g(int trgb, int g);
@@ -129,7 +119,7 @@ void		plot(int x, int y);
 int			set_r(int trgb, int r);
 
 int			keys_action(int key, void *param);
-void			draw_bressman_line(t_img *img, t_point p0, t_point p1);
+void			draw_bressman_line(t_img *img, t_point p0, t_point p1, int diff_y);
 
 void		draw_origin(t_fdf *fdf);
 void		link_points(t_fdf *fdf);
@@ -160,8 +150,14 @@ void		draw_menu_graduation(t_fdf *fdf, t_img *img, const t_menu *type, const t_o
 void		draw_graduation(t_fdf *fdf, int pos_y, int lim_y, t_option option);
 
 void		put_point_color(t_img *img, int x, int y, int color);
-void	draw_main_img(t_fdf *fdf, t_img *img);
-void	display_fdfinfos(t_fdf *fdf);
+void		draw_main_img(t_fdf *fdf, t_img *img);
+void		display_fdfinfos(t_fdf *fdf);
+void    	transform_isometric_map(t_fdf *fdf);
+int			process_next_projection(t_fdf *fdf);
+void    process_cleaning(t_fdf *fdf);
+
+
+
 
 //void		put_point_menu_color(t_mlx *mlx, int x, int y, int color);
 

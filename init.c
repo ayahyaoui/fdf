@@ -17,14 +17,13 @@ t_img	*initialise_img(t_img *img, int width, void *mlx_ptr)
 	int	bits_per_pixel;
 	int	endian;
 
-
 	bzero(img, sizeof(t_img));
 	img->height = SIZE_HEIGHT;
 	img->width = width;
 	img->img_ptr = mlx_new_image(mlx_ptr, img->width, img->height);
 	img->draw_map = mlx_get_data_addr(img->img_ptr, &bits_per_pixel,
 			&(img->size_line), &endian);
-	return img;
+	return (img);
 }
 
 	/*
@@ -68,5 +67,5 @@ void	initialise_fdf(t_fdf *fdf, t_mlx *mlx, t_img *main, t_img *menu)
 	fdf->infos.deep = 1;
 	fdf->infos.step_size = 10;
 	fdf->angle.pas = 10;
-	fdf->type_projection = PARALLELE;
+	fdf->type_projection = ORTHO;
 }

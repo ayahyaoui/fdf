@@ -106,7 +106,6 @@ void	draw_option(t_fdf *fdf, const t_menu type[], char name[GRID_NB][20],
 
 void	draw_menu(t_fdf *fdf)
 {
-	int						i;
 	t_mlx					*mlx;
 	static const t_menu		type[GRID_NB] = {NOTHING, NOTHING, NOTHING, TITLE,
 		SUB_TITLE, SUB_TITLE, SUB_TITLE, NOTHING, TITLE, GRADUATION, GRADUATION,
@@ -124,12 +123,7 @@ void	draw_menu(t_fdf *fdf)
 		ROTATION_STEP, MOVE_STEP, MOVE_STEP, MOVE_STEP};
 
 	mlx = fdf->mlx;
-	i = 0;
-	
 	draw_menu_background(mlx->menu_img);
 	draw_menu_graduation(fdf, mlx->menu_img, type, options);
-	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win,
-		mlx->menu_img->img_ptr, 0, 0);
 	draw_option(fdf, type, name, options);
-	printf("end menu\n");
 }

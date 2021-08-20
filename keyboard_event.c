@@ -15,14 +15,19 @@
 
 int	process_key_direction(t_fdf *fdf, int key)
 {
+	int direction;
+
+	direction = 1;
+	if (fdf->infos.x_max < 420 || fdf->infos.y_max < 420) 
+		direction = -1;
 	if (key == RIGHT)
-		fdf->infos.x_origin -= fdf->infos.step_size;
+		fdf->infos.x_origin += fdf->infos.step_size * direction;
 	else if (key == LEFT)
-		fdf->infos.x_origin += fdf->infos.step_size;
+		fdf->infos.x_origin -= fdf->infos.step_size * direction;
 	else if (key == UP)
-		fdf->infos.y_origin += fdf->infos.step_size;
+		fdf->infos.y_origin -= fdf->infos.step_size * direction;
 	else if (key == DOWN)
-		fdf->infos.y_origin -= fdf->infos.step_size;
+		fdf->infos.y_origin += fdf->infos.step_size * direction;
 	else
 		return (-1);
 	process_draw(fdf);
@@ -50,12 +55,10 @@ int	process_rotation(t_fdf *fdf, int key)
 		type_rotation = ROTATION_Y;
 	if (key == Z_RIGHT || key == Z_LEFT)
 		type_rotation = ROTATION_Z;
-	printf("start calculate rotation\n");
 	if (!fdf->angle.nb_rotate % 2 || 1)
 		rotate_precision(fdf);
 	else
 		rotate_direction(fdf, type_rotation, sens);
-	printf("rotation calculated\n");
 	return (1);
 }
 
@@ -131,8 +134,7 @@ int	keys_action(int key, void *param)
 	if (key == QUIT || key == ESC)
 	{
 		mlx_destroy_window(mlx->mlx_ptr, mlx->win);
-		free(mlx->mlx_ptr);
-		free(fdf->button_grad_y);
+		process_cleaning(fdf);
 		exit(0);
 	}
 	if (key == LEFT || key == RIGHT || key == UP || key == DOWN)
@@ -146,5 +148,7 @@ int	keys_action(int key, void *param)
 		return (process_rotation(fdf, key));
 	if (key == SHALLOWER || key == DEEPER)
 		process_deep(fdf, key);
+	if (key == NEXT_PROJECTION)
+		process_next_projection(fdf);
 	return (1);
 }

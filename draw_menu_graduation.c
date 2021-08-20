@@ -28,13 +28,13 @@ void	draw_graduation(t_fdf *fdf, int pos_y, int lim_y, t_option option)
 		j = 0;
 		while (j < ((img->width * 8 / 3) - start_x) * proportion)
 		{
-			put_point_color(img->img_ptr, (start_x + j) / 4, pos_y,
+			put_point_color(img, (start_x + j) / 4, pos_y,
 				set_g(0, 255));
 			j += 4;
 		}
 		while (j < (img->width * 8 / 3) - start_x)
 		{
-			put_point_color(img->img_ptr, (start_x + j) / 4, pos_y,
+			put_point_color(img, (start_x + j) / 4, pos_y,
 				GRAD_BACK_COL);
 			j += 4;
 		}
@@ -68,6 +68,8 @@ void	draw_menu_graduation(t_fdf *fdf, t_img *img, const t_menu *type,
 			index++;
 		}
 	}
+	mlx_put_image_to_window(fdf->mlx->mlx_ptr, fdf->mlx->win,
+		img->img_ptr, 0, 0);
 }
 
 int	put_graduation(t_fdf *fdf, char title_min[], char title_plus[], int y)

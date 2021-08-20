@@ -63,8 +63,8 @@ t_point	get_pixel_center(t_fdf *fdf)
 
 void	display_fdfinfos(t_fdf *fdf)
 {
-	t_mlx 	*mlx;
-	t_infos *infos;
+	t_mlx	*mlx;
+	t_infos	*infos;
 	t_img	*main_img;
 	t_img	*menu_img;
 

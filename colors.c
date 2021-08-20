@@ -11,6 +11,20 @@
 /* ************************************************************************** */
 
 # include "fdf.h"
+#define WHITE 16777215
+
+/*
+ *
+ * Do not forget to count the depth
+ * */
+int get_color_height(float height)
+{
+	if (height > 0)
+		return set_b(0, 255);
+	else
+		return WHITE;
+}
+
 
 
 int	get_t(int trgb)
