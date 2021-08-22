@@ -39,12 +39,10 @@ void	put_point_color(t_img *img, int x, int y, int color)
 void	draw_vertical_line(t_img *img, t_point p0, t_point p1)
 {
 	int		x0;
-	int		x1;
 	int		y0;
 	int		y1;
 
 	x0 = p0.x;
-	x1 = p1.x;
 	y0 = p0.y;
 	y1 = p1.y;
 	while (y0 != y1)

@@ -81,11 +81,9 @@ void	draw_option(t_fdf *fdf, const t_menu type[], char name[GRID_NB][20],
 {
 	int		i;
 	t_mlx	*mlx;
-	t_img	*img;
 
 	i = 0;
 	mlx = fdf->mlx;
-	img = mlx->menu_img;
 	while (i < GRID_NB)
 	{
 		if (type[i] == TITLE)

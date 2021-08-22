@@ -81,6 +81,12 @@ int	put_graduation(t_fdf *fdf, char title_min[], char title_plus[], int y)
 	int				h;
 
 	mlx = fdf->mlx;
+	if (!title_min && !title_min && !y && minus && plus)
+	{
+		mlx_destroy_image(mlx->mlx_ptr, minus);
+		mlx_destroy_image(mlx->mlx_ptr, plus);
+		return (1);
+	}
 	if (!minus || !plus)
 	{
 		plus = mlx_xpm_file_to_image(mlx->mlx_ptr, (char *)title_plus, &w, &h);

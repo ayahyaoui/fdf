@@ -65,12 +65,10 @@ int	process_rotation(t_fdf *fdf, int key)
 int	process_zoom(t_fdf *fdf, int key)
 {
 	t_point	center;
-	int		middle;
 	t_point	new_center;
 	int		*z;
 
 	z = &fdf->infos.zoom;
-	middle = fdf->infos.y_max / 2;
 	center = get_pixel_center(fdf);
 	if (key == ZOOM && *z * fdf->infos.zoom_y * fdf->infos.step_size < SIZE_H)
 	{
@@ -133,8 +131,12 @@ int	keys_action(int key, void *param)
 	mlx = fdf->mlx;
 	if (key == QUIT || key == ESC)
 	{
-		mlx_destroy_window(mlx->mlx_ptr, mlx->win);
+		put_graduation(fdf, 0x0, 0x0, 0);
 		process_cleaning(fdf);
+		mlx_destroy_window(mlx->mlx_ptr, mlx->win);
+		mlx_destroy_display(mlx->mlx_ptr);
+		if (mlx->mlx_ptr)
+			free(mlx->mlx_ptr);
 		exit(0);
 	}
 	if (key == LEFT || key == RIGHT || key == UP || key == DOWN)

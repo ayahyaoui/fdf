@@ -48,7 +48,7 @@ int	count_number_string(char *line)
  * un tableau d'entier
  *
  */
-t_point	*convert_string_to_points(t_fdf *fdf, char *s, int y)
+t_point	*convert_string_to_points(t_fdf *fdf, char *s)
 {
 	t_point		*tab;
 	int			i;
@@ -96,7 +96,7 @@ void	center_map(t_fdf *fdf)
 ** change original_map
 ** change les malloc par memalloc 
 */
-t_point	**create_3d_map(t_fdf *fdf, t_img *img)
+t_point	**create_3d_map(t_fdf *fdf)
 {
 	t_point		**map;
 	int			i;
@@ -141,7 +141,8 @@ t_fdf	*parsing_map(t_fdf *fdf, const char *file_name)
 	fdf->infos.y_max = 1;
 	fdf->original_map = (t_point **) ft_memalloc(sizeof(t_point *)
 			* (BUFFER_MAP + 1));
-	fdf->original_map[0] = convert_string_to_points(fdf, line, 0);
+	fdf->original_map[0] = convert_string_to_points(fdf, line);
+	free(line);
 	while (get_next_line2(fd, &line) > 0)
 	{
 		fdf->infos.y_max ++;
@@ -149,9 +150,9 @@ t_fdf	*parsing_map(t_fdf *fdf, const char *file_name)
 			fdf->original_map = (t_point **)realloc(fdf->original_map,
 					(fdf->infos.y_max + BUFFER_MAP + 1) * sizeof(t_point *));
 		fdf->original_map[fdf->infos.y_max - 1] = convert_string_to_points
-			(fdf, line, fdf->infos.y_max);
+			(fdf, line);
 		free(line);
 	}
-	fdf->map = create_3d_map(fdf, fdf->mlx->main_img);
+	fdf->map = create_3d_map(fdf);
 	return (fdf);
 }

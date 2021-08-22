@@ -58,12 +58,13 @@ int	mouse_event(int button, int x, int y, void *param)
 	static const t_option	options[GRADUATION_SIZE] = {ZOOM_STEP, DEPTH_STEP,
 					ROTATION_STEP, MOVE_STEP};
 
+	(void)button;
 	fdf = (t_fdf *)param;
 	i = -1;
 	width = fdf->mlx->menu_img->width;
 	while (++i < GRADUATION_SIZE)
 	{
-		if (fdf->button_grad_y > 0 && y > fdf->button_grad_y[i]
+		if (fdf->button_grad_y[i] > 0 && y > fdf->button_grad_y[i]
 			&& y < fdf->button_grad_y[i] + SIZE_BUTTON
 			&& ((x > width / 20 && x < width / 20 + BUTTON_LEFT_W)
 				|| (x > width * 2 / 3 && x < width * 2 / 3 + BUTTON_RIGHT_W)))

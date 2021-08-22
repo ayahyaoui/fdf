@@ -5,6 +5,10 @@
 
 
 #define ESC 53
+/*
+ * Commente l'ancienne version
+ */
+/*
 #define LEFT 123
 #define RIGHT 124
 #define DOWN 125
@@ -22,6 +26,33 @@
 #define DEEPER 13
 #define SHALLOWER 7
 #define NEXT_PROJECTION 45
+*/
+/*
+ * coller les define sous ce commentaire
+ */
+
+#define LEFT 65361
+#define RIGHT 65363
+#define DOWN 65364
+#define UP 65362
+#define ZOOM 61
+#define UNZOOM 45
+#define QUIT 113
+#define X_RIGHT 50
+#define X_LEFT 49
+#define Y_RIGHT 52
+#define Y_LEFT 51
+#define Z_RIGHT 57
+#define Z_LEFT 56
+#define INFOS 105
+#define DEEPER 112
+#define SHALLOWER 109
+#define NEXT_PROJECTION 110
+
+
+/*
+ * coller les define au dessus de ce commentaire
+ */
 
 #define GRID_SIZE 30
 #define GRID_NB 19

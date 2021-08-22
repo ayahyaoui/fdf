@@ -12,7 +12,7 @@
 
 #include "specialkey.h"
 
-#define NB_SPECIAL_KEYS 13
+#define NB_SPECIAL_KEYS 17
 #define HEIGHT 400
 #define WIDTH 1000
 /*
@@ -38,12 +38,17 @@ const char		*g_message[NB_SPECIAL_KEYS + 1] = {
 	"Choisie la rotation gauche(Y)",
 	"Choisie la rotation droite(Z)",
 	"Choisie la rotation gauche(Z)",
+	"Choisie le boutton afficher les information dans le terminal",
+	"Choisie le boutton pour augmenter la profondeur",
+	"Choisie le boutton pour reduire la profondeur",
+	"Choisie le boutton passer a la prochaine projection",
 	0x0
 	};
 
 const char		*g_define_name[NB_SPECIAL_KEYS + 1] = {"LEFT", "RIGHT", "DOWN",
 				"UP", "ZOOM", "UNZOOM", "QUIT", "X_RIGHT",
-				"X_LEFT", "Y_RIGHT", "Y_LEFT", "Z_RIGHT", "Z_LEFT", 0x0};
+				"X_LEFT", "Y_RIGHT", "Y_LEFT", "Z_RIGHT", "Z_LEFT", "INFOS",
+				"DEEPER", "SHALLOWER", "NEXT_PROJECTION", 0x0};
 
 t_specialkeys	*initialise_specialkeys(void)
 {
@@ -66,8 +71,8 @@ int	get_keys(int key, void *param)
 	t_specialkeys	*data;
 
 	data = param;
-	data->key_value[compteur] = key;
-	compteur++;
+	if (compteur >= 0)
+		data->key_value[compteur] = key;
 	if (compteur < NB_SPECIAL_KEYS)
 	{
 		mlx_clear_window(data->mlx_ptr, data->win_ptr);
@@ -76,15 +81,16 @@ int	get_keys(int key, void *param)
 	}
 	else
 	{
-		i = -1;
+		i = 0;
 		printf("ajoute les lignes ci dessous dans le fichier fdf.h\n");
-		while (++i < NB_SPECIAL_KEYS)
-			printf("#define %s %d\n", g_define_name[i], data->key_value[i]);
+		while (++i <= NB_SPECIAL_KEYS)
+			printf("#define %s %d\n", g_define_name[i - 1], data->key_value[i]);
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 		free(data->key_value);
 		free(data);
 		exit(0);
 	}
+	compteur++;
 	return (1);
 }
 
@@ -104,7 +110,7 @@ int	check_constante(void)
 	return (1);
 }
 
-int	main(int argc, const char *argv[])
+int	main()
 {
 	t_specialkeys	*mlx;
 
@@ -113,7 +119,7 @@ int	main(int argc, const char *argv[])
 	mlx = initialise_specialkeys();
 	mlx_key_hook(mlx->win_ptr, get_keys, mlx);
 	mlx_string_put(mlx->mlx_ptr, mlx->win_ptr, 10, mlx->size_y / 2,
-		set_trgb(128, 255, 255, 255), (char *)g_message[0]);
+		set_b(0, 255), "Appuie sur n'importe quelle touches");
 	mlx_loop(mlx->mlx_ptr);
 	return (0);
 }

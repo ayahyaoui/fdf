@@ -117,7 +117,6 @@ int			set_trgb(int t, int r, int g, int b);
 t_fdf		*parsing_map(t_fdf *map, const char *file_name);
 void		plot(int x, int y);
 int			set_r(int trgb, int r);
-
 int			keys_action(int key, void *param);
 void			draw_bressman_line(t_img *img, t_point p0, t_point p1, int diff_y);
 
@@ -156,6 +155,7 @@ void    	transform_isometric_map(t_fdf *fdf);
 int			process_next_projection(t_fdf *fdf);
 void    process_cleaning(t_fdf *fdf);
 
+int	put_graduation(t_fdf *fdf, char title_min[], char title_plus[], int y);
 
 
 
