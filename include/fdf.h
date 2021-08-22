@@ -157,8 +157,16 @@ void    process_cleaning(t_fdf *fdf);
 
 int	put_graduation(t_fdf *fdf, char title_min[], char title_plus[], int y);
 
-
+// utils_rotate
 
 //void		put_point_menu_color(t_mlx *mlx, int x, int y, int color);
+t_point	create_point(int a, int b, int c);
+void	copy_point(t_point *p1, t_point p2);
+void	center_not_move(t_fdf *fdf, t_point old_pos, t_point pos);
+t_point	copy_center_map(t_fdf *fdf, t_point **map);
+void	rotate_direction(t_fdf *fdf, t_type_rotation direction, int sens);
+void	rotate_total_point(t_point *point, t_point p, double theta);
+
+
 
 #endif /* __FDF_H__ */

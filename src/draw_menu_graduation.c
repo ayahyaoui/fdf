@@ -84,17 +84,14 @@ int	put_graduation(t_fdf *fdf, char title_min[], char title_plus[], int y)
 	if (!title_min && !title_min && !y && minus && plus)
 	{
 		mlx_destroy_image(mlx->mlx_ptr, minus);
-		mlx_destroy_image(mlx->mlx_ptr, plus);
-		return (1);
+		return (mlx_destroy_image(mlx->mlx_ptr, plus));
 	}
 	if (!minus || !plus)
 	{
 		plus = mlx_xpm_file_to_image(mlx->mlx_ptr, (char *)title_plus, &w, &h);
 		minus = mlx_xpm_file_to_image(mlx->mlx_ptr, (char *)title_min, &w, &h);
 	}
-	if (!minus || !plus)
-		printf("NOOOOOO CRASH image non trou %s, %s\n", title_plus, title_min);
-	else
+	if (minus && plus)
 	{
 		mlx_put_image_to_window(mlx->mlx_ptr, mlx->win, plus,
 			mlx->menu_img->width * 2 / 3, y - 10);

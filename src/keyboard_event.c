@@ -131,12 +131,7 @@ int	keys_action(int key, void *param)
 	mlx = fdf->mlx;
 	if (key == QUIT || key == ESC)
 	{
-		put_graduation(fdf, 0x0, 0x0, 0);
 		process_cleaning(fdf);
-		mlx_destroy_window(mlx->mlx_ptr, mlx->win);
-		mlx_destroy_display(mlx->mlx_ptr);
-		if (mlx->mlx_ptr)
-			free(mlx->mlx_ptr);
 		exit(0);
 	}
 	if (key == LEFT || key == RIGHT || key == UP || key == DOWN)

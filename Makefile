@@ -8,7 +8,8 @@ DIR_OBJ = obj
 
 SRCS = colors.c keyboard_event.c main.c parsing.c utils.c draw.c init.c \
 		draw_menu.c draw_menu_graduation.c rotation.c mouse_event.c \
-		infos.c draw_main_img.c isometric_projection.c projection.c free.c
+		infos.c draw_main_img.c projection.c free.c\
+		rotate_main.c utils_rotate.c
 
 SRCS_OPTION = utils_getcode.c colors.c
 

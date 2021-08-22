@@ -82,7 +82,6 @@ int	get_keys(int key, void *param)
 	else
 	{
 		i = 0;
-		printf("ajoute les lignes ci dessous dans le fichier fdf.h\n");
 		while (++i <= NB_SPECIAL_KEYS)
 			printf("#define %s %d\n", g_define_name[i - 1], data->key_value[i]);
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
@@ -110,7 +109,7 @@ int	check_constante(void)
 	return (1);
 }
 
-int	main()
+int	main(void)
 {
 	t_specialkeys	*mlx;
 
