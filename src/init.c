@@ -17,7 +17,7 @@ t_img	*initialise_img(t_img *img, int width, void *mlx_ptr)
 	int	bits_per_pixel;
 	int	endian;
 
-	bzero(img, sizeof(t_img));
+	ft_bzero(img, sizeof(t_img));
 	img->height = SIZE_HEIGHT;
 	img->width = width;
 	img->img_ptr = mlx_new_image(mlx_ptr, img->width, img->height);
@@ -56,7 +56,7 @@ t_mlx	*initialise_mlx(t_mlx *mlx, t_img *main, t_img *menu)
 
 void	initialise_fdf(t_fdf *fdf, t_mlx *mlx, t_img *main, t_img *menu)
 {
-	bzero(fdf, sizeof(t_fdf));
+	ft_bzero(fdf, sizeof(t_fdf));
 	mlx = initialise_mlx(mlx, main, menu);
 	fdf->mlx = mlx;
 	fdf->infos.zoom = 1;

@@ -119,7 +119,7 @@ void	draw_origin(t_fdf *fdf)
 
 void	draw_main_img(t_fdf *fdf, t_img *img)
 {
-	bzero(img->draw_map, img->size_line * img->height);
+	ft_bzero(img->draw_map, img->size_line * img->height);
 	draw_origin(fdf);
 	link_points(fdf);
 }

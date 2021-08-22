@@ -10,14 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef SPECIALKEY_H
+# define SPECIALKEY_H
 
-#ifndef __SPECIALKEY_H__
-#define __SPECIALKEY_H__
-
-#include <mlx.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+# include <mlx.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
 
 typedef struct s_specialkeys
 {
@@ -28,13 +27,11 @@ typedef struct s_specialkeys
 	int				*key_value;
 }					t_specialkeys;
 
+int		set_b(int trgb, int b);
+int		set_g(int trgb, int g);
+int		set_r(int trgb, int r);
+int		set_t(int trgb, int t);
 
+int		set_trgb(int t, int r, int g, int b);
 
-int set_b(int trgb, int b);
-int set_g(int trgb, int g);
-int set_r(int trgb, int r);
-int set_t(int trgb, int t);
-
-int set_trgb(int t, int r, int g, int b);
-
-#endif /* __SPECIALKEY_H__ */
+#endif

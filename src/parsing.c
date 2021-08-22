@@ -16,6 +16,8 @@
 #define BUFFER_MAP  128
 #define SPACE_X 2
 #define SPACE_Y 2
+#define LIMIT_MAP 42000
+
 /*
 *	TODO deplacer la fonction autre par
 *	count_number_string 
@@ -65,7 +67,7 @@ t_point	*convert_string_to_points(t_fdf *fdf, char *s)
 	tab[0].x = size;
 	while (s[i] && number < size + 1)
 	{
-		tab[number].z = atoi(&s[i]);
+		tab[number].z = ft_atoi(&s[i]);
 		while (s[i] && !ft_isdigit(s[i]))
 			i++;
 		while (s[i] && ft_isdigit(s[i]))
@@ -120,6 +122,7 @@ t_point	**create_3d_map(t_fdf *fdf)
 		i++;
 	}
 	center_map(fdf);
+
 	return (map);
 }
 
@@ -145,6 +148,7 @@ t_fdf	*parsing_map(t_fdf *fdf, const char *file_name)
 	free(line);
 	while (get_next_line2(fd, &line) > 0)
 	{
+
 		fdf->infos.y_max ++;
 		if (fdf->infos.y_max % BUFFER_MAP == 0)
 			fdf->original_map = (t_point **)realloc(fdf->original_map,

@@ -83,7 +83,7 @@ int	get_keys(int key, void *param)
 	{
 		i = 0;
 		while (++i <= NB_SPECIAL_KEYS)
-			printf("#define %s %d\n", g_define_name[i - 1], data->key_value[i]);
+			printf("# define %s %d\n", g_define_name[i - 1], data->key_value[i]);
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 		free(data->key_value);
 		free(data);
