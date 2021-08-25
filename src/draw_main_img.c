@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 #define COLORS_CENTER 1
-#define THICKNESS 2
+#define THICKNESS 0
 
 void	draw_outline(t_infos infos, t_img *img, t_point p, int size)
 {
