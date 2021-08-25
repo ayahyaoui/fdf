@@ -23,6 +23,7 @@ t_img	*initialise_img(t_img *img, int width, void *mlx_ptr)
 	img->img_ptr = mlx_new_image(mlx_ptr, img->width, img->height);
 	img->draw_map = mlx_get_data_addr(img->img_ptr, &bits_per_pixel,
 			&(img->size_line), &endian);
+	printf("en %d\n", bits_per_pixel);
 	return (img);
 }
 

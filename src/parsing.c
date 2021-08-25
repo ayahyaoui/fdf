@@ -153,8 +153,6 @@ t_fdf	*parsing_map(t_fdf *fdf, const char *file_name)
 			(fdf, line);
 		free(line);
 		if (fdf->infos.y_max > LIMIT_MAP || fdf->infos.x_max > LIMIT_MAP)
-			free(fdf->original_map);
-		if (fdf->infos.y_max > LIMIT_MAP || fdf->infos.x_max > LIMIT_MAP)
 			return (0x0);
 	}
 	fdf->map = create_3d_map(fdf);

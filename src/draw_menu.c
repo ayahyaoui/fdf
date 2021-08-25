@@ -32,7 +32,6 @@ void	draw_menu_background(t_img *img)
 		while (j < img->size_line / 4)
 		{
 			put_point_color(img, j, i, set_b(set_g(set_r(0, 42), 42), 42));
-			//img->draw_map[i * img->size_line + j] = 127;
 			j++;
 		}
 		i++;
