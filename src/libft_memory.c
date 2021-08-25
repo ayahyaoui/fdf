@@ -1,17 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdupf.c                                       :+:      :+:    :+:   */
+/*   libft_memory.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/07 13:33:38 by emuckens          #+#    #+#             */
-/*   Updated: 2018/05/20 17:05:07 by emuckens         ###   ########.fr       */
+/*   Created: 2021/08/25 11:31:16 by anyahyao          #+#    #+#             */
+/*   Updated: 2021/08/25 11:31:18 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include <stdlib.h>
+#include "fdf.h"
+
+void	*ft_memset(void *str, int c, size_t len)
+{
+	unsigned char	*string;
+
+	string = (unsigned char *)str;
+	while (len)
+	{
+		*(string) = (unsigned char)c;
+		--len;
+		string++;
+	}
+	return (str);
+}
+
+void	ft_bzero(void *s, size_t n)
+{
+	ft_memset(s, 0, n);
+}
+
+char	*ft_strnew(size_t size)
+{
+	char	*str;
+
+	str = (char *)malloc((size + 1) * sizeof(char));
+	if (!(str))
+		return (NULL);
+	ft_bzero(str, size + 1);
+	return (str);
+}
 
 char	*ft_strdupf(char *dest, const char *src, int to_free)
 {
@@ -22,7 +52,8 @@ char	*ft_strdupf(char *dest, const char *src, int to_free)
 
 	dup = NULL;
 	ptr = (char *)(unsigned long)src;
-	if (!(dup = (char *)malloc((ft_strlen(ptr) + 1) * sizeof(char))))
+	dup = (char *)malloc((ft_strlen(ptr) + 1) * sizeof(char));
+	if (!(dup))
 		return (NULL);
 	i = 0;
 	len = ft_strlen(ptr);

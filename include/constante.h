@@ -18,23 +18,23 @@
  * Commente l'ancienne version
  */
 
-#define LEFT 123
-#define RIGHT 124
-#define DOWN 125
-#define UP 126
-#define ZOOM 69
-#define UNZOOM 78
-#define QUIT 12
-#define X_RIGHT 85
-#define X_LEFT 83
-#define Y_RIGHT 88
-#define Y_LEFT 86
-#define Z_RIGHT 92
-#define Z_LEFT 89
-#define INFOS 34
-#define DEEPER 13
-#define SHALLOWER 7
-#define NEXT_PROJECTION 45
+# define LEFT 123
+# define RIGHT 124
+# define DOWN 125
+# define UP 126
+# define ZOOM 69
+# define UNZOOM 78
+# define QUIT 12
+# define X_RIGHT 85
+# define X_LEFT 83
+# define Y_RIGHT 88
+# define Y_LEFT 86
+# define Z_RIGHT 92
+# define Z_LEFT 89
+# define INFOS 34
+# define DEEPER 13
+# define SHALLOWER 7
+# define NEXT_PROJECTION 45
 
 /*
  * coller les define sous ce commentaire

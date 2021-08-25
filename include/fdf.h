@@ -161,23 +161,21 @@ void		center_not_move(t_fdf *fdf, t_point old_pos, t_point pos);
 t_point		copy_center_map(t_fdf *fdf, t_point **map);
 void		rotate_direction(t_fdf *fdf, t_type_rotation direction, int sens);
 void		rotate_total_point(t_point *point, t_point p, double theta);
-void	rotate_point(t_point *point, double theta, t_type_rotation type_rotate);
+void		rotate_point(t_point *point, double theta, t_type_rotation type_r);
 
-
-void	*ft_realloc(void *l, int t);
-int		ft_atoi(char *str);
-void	ft_bzero(void *s, size_t n);
-char	*ft_strdupf(char *dest, const char *src, int to_free);
-void	*ft_memset(void *str, int c, size_t len);
-char	*ft_strchr(const char *s, int c);
-void	ft_strdel(char **as);
-char	*ft_strjoin(char const *s1, char const *s2);
-char	*ft_strnew(size_t size);
-char	*ft_strsub(char const *s, unsigned int beg, size_t len);
-size_t	ft_strlen(const char *str);
-int		ft_isdigit(int b);
-void	*ft_memalloc(size_t size);
-int		get_next_line2(const int fd, char **line);
-
+void		*ft_realloc(void *l, int t);
+int			ft_atoi(char *str);
+void		ft_bzero(void *s, size_t n);
+char		*ft_strdupf(char *dest, const char *src, int to_free);
+void		*ft_memset(void *str, int c, size_t len);
+char		*ft_strchr(const char *s, int c);
+void		ft_strdel(char **as);
+char		*ft_strjoin(char const *s1, char const *s2);
+char		*ft_strnew(size_t size);
+char		*ft_strsub(char const *s, unsigned int beg, size_t len);
+size_t		ft_strlen(const char *str);
+int			ft_isdigit(int b);
+void		*ft_memalloc(size_t size);
+int			get_next_line2(const int fd, char **line);
 
 #endif

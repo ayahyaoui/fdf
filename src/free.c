@@ -44,7 +44,6 @@ void	process_cleaning(t_fdf *fdf)
 		free(fdf->original_map);
 	free_mlx(fdf->mlx);
 	mlx_destroy_window(fdf->mlx->mlx_ptr, fdf->mlx->win);
-	//mlx_destroy_display(fdf->mlx->mlx_ptr);
 	if (fdf->mlx->mlx_ptr)
 		free(fdf->mlx->mlx_ptr);
 }

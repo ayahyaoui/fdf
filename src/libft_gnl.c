@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gnl_lib.c                                          :+:      :+:    :+:   */
+/*   libft_gnl.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anyahyao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/22 20:53:25 by anyahyao          #+#    #+#             */
-/*   Updated: 2021/08/22 20:53:27 by anyahyao         ###   ########.fr       */
+/*   Created: 2021/08/25 11:31:44 by anyahyao          #+#    #+#             */
+/*   Updated: 2021/08/25 11:31:46 by anyahyao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include "fdf.h"
 
 size_t	ft_strlen(const char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -33,7 +33,8 @@ char	*ft_strsub(char const *s, unsigned int beg, size_t len)
 	if (!s)
 		return (NULL);
 	i = 0;
-	if (!(str = (char *)malloc(len + 1)))
+	str = (char *)malloc(len + 1);
+	if (!(str))
 		return (NULL);
 	str[len] = '\0';
 	while (len--)
@@ -54,7 +55,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	index = 0;
 	ptr1 = (char *)(unsigned long)s1;
 	ptr2 = (char *)(unsigned long)s2;
-	if (!(str = (char *)malloc(ft_strlen(ptr1) + ft_strlen(ptr2) + 1)))
+	str = (char *)malloc(ft_strlen(ptr1) + ft_strlen(ptr2) + 1);
+	if (!(str))
 		return (NULL);
 	while (s1 && *s1)
 	{
@@ -82,7 +84,7 @@ void	ft_strdel(char **as)
 
 char	*ft_strchr(const char *s, int c)
 {
-	char *ptr;
+	char	*ptr;
 
 	ptr = (char *)(unsigned long)s;
 	if (!s)
@@ -96,59 +98,4 @@ char	*ft_strchr(const char *s, int c)
 		s++;
 	}
 	return (0);
-}
-
-void	*ft_memset(void *str, int c, size_t len)
-{
-	unsigned char	*string;
-
-	string = (unsigned char *)str;
-	while (len)
-	{
-		*(string) = (unsigned char)c;
-		--len;
-		string++;
-	}
-	return (str);
-}
-
-void	ft_bzero(void *s, size_t n)
-{
-	ft_memset(s, 0, n);
-}
-
-char	*ft_strnew(size_t size)
-{
-	char *str;
-
-	if (!(str = (char *)malloc((size + 1) * sizeof(char))))
-		return (NULL);
-	ft_bzero(str, size + 1);
-	return (str);
-}
-
-char	*ft_strdupf(char *dest, const char *src, int to_free)
-{
-	int		i;
-	char	*dup;
-	size_t	len;
-	char	*ptr;
-
-	dup = NULL;
-	ptr = (char *)(unsigned long)src;
-	if (!(dup = (char *)malloc((ft_strlen(ptr) + 1) * sizeof(char))))
-		return (NULL);
-	i = 0;
-	len = ft_strlen(ptr);
-	while (len--)
-	{
-		dup[i] = src[i];
-		i++;
-	}
-	dup[i] = '\0';
-	if ((to_free == 2 || to_free == 3) && src != NULL)
-		ft_strdel(&ptr);
-	if ((to_free == 1 || to_free == 3) && dest != NULL)
-		ft_strdel(&ptr);
-	return (dup);
 }
