@@ -24,7 +24,6 @@ void	draw_menu_background(t_img *img)
 	int		i;
 	int		j;
 
-	printf("%u\n", 127 + (127 << 8) + (127 << 16) + (127 << 24));
 	i = 0;
 	while (i < img->height)
 	{

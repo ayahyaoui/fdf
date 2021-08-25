@@ -108,16 +108,15 @@ static int	inner_gnl(int fd, long int *ret, char **remain, char **buffer)
 	}
 	ft_strdel(buffer);
 	if (*ret == 0 && *remain && (*remain)[0] == 0)
-	{
 		ft_strdel(remain);
+	if (*ret <= 0 && !*remain)
 		return (0);
-	}
 	return (1);
 }
 
 int	get_next_line2(const int fd, char **line)
 {
-	static char		*remain;
+	static char		*remain = NULL;
 	char			*buffer;
 	long int		ret;
 

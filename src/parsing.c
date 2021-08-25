@@ -22,6 +22,7 @@
 *	TODO deplacer la fonction autre par
 *	count_number_string 
 *		renvois: le nombre de nombre dans la string
+ * 	replace , par is_separator()
 **/
 int	count_number_string(char *line)
 {
@@ -39,6 +40,12 @@ int	count_number_string(char *line)
 			was_number = 1;
 			number ++;
 		}
+		else if (!(ft_isspace(line[i]) || ft_isdigit(line[i]) || line[i] == ','
+				|| line[i] == 'x' || (line[i] >= 'A' && line[i] <= 'F')))
+		{
+			printf("Unexpected charactere <%c>\n", line[i]);
+			return (-1);
+		}
 		else
 			was_number = 0;
 	}
@@ -50,7 +57,7 @@ int	count_number_string(char *line)
  * un tableau d'entier
  *
  */
-t_point	*convert_string_to_points(t_fdf *fdf, char *s)
+t_point	*convert_s_to_p(t_fdf *fdf, char *s)
 {
 	t_point		*tab;
 	int			i;
@@ -58,6 +65,8 @@ t_point	*convert_string_to_points(t_fdf *fdf, char *s)
 	int			size;
 
 	size = count_number_string(s) + 1;
+	if (size <= 0 || size > LIMIT_MAP || fdf->infos.y_max > LIMIT_MAP)
+		return (0x0);
 	if (size > fdf->infos.x_max)
 		fdf->infos.x_max = size;
 	tab = (t_point *)ft_memalloc(sizeof(t_point) * (size + 1));
@@ -136,25 +145,25 @@ t_fdf	*parsing_map(t_fdf *fdf, const char *file_name)
 	char	*line;
 
 	fd = open(file_name, O_RDONLY);
-	if (get_next_line2(fd, &line) < 0)
+	if (get_next_line2(fd, &line) <= 0)
 		return (0x0);
 	fdf->infos.y_max = 1;
 	fdf->original_map = (t_point **) ft_memalloc(sizeof(t_point *)
 			* (BUFFER_MAP + 1));
-	fdf->original_map[0] = convert_string_to_points(fdf, line);
+	fdf->original_map[0] = convert_s_to_p(fdf, line);
 	free(line);
-	while (get_next_line2(fd, &line) > 0)
+	while (fdf->original_map[fdf->infos.y_max - 1]
+		&& get_next_line2(fd, &line) > 0)
 	{
 		fdf->infos.y_max ++;
 		if (fdf->infos.y_max % BUFFER_MAP == 0)
 			fdf->original_map = (t_point **)realloc(fdf->original_map,
 					(fdf->infos.y_max + BUFFER_MAP + 1) * sizeof(t_point *));
-		fdf->original_map[fdf->infos.y_max - 1] = convert_string_to_points
-			(fdf, line);
+		fdf->original_map[fdf->infos.y_max - 1] = convert_s_to_p(fdf, line);
 		free(line);
-		if (fdf->infos.y_max > LIMIT_MAP || fdf->infos.x_max > LIMIT_MAP)
-			return (0x0);
 	}
+	if (!fdf->original_map[fdf->infos.y_max - 1])
+		return (0x0);
 	fdf->map = create_3d_map(fdf);
 	return (fdf);
 }

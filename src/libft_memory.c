@@ -69,3 +69,15 @@ char	*ft_strdupf(char *dest, const char *src, int to_free)
 		ft_strdel(&ptr);
 	return (dup);
 }
+
+void	*ft_memalloc(size_t size)
+{
+	void	*mem;
+
+	mem = (void *)malloc(sizeof(char) * size);
+	if (!(mem))
+		return (0x0);
+	while (size--)
+		((unsigned char *)mem)[size] = 0;
+	return (mem);
+}

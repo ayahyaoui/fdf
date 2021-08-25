@@ -176,6 +176,7 @@ char		*ft_strsub(char const *s, unsigned int beg, size_t len);
 size_t		ft_strlen(const char *str);
 int			ft_isdigit(int b);
 void		*ft_memalloc(size_t size);
+int			ft_isspace(int v);
 int			get_next_line2(const int fd, char **line);
 
 #endif

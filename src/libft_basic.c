@@ -13,18 +13,6 @@
 #include <stdlib.h>
 #include "fdf.h"
 
-void	*ft_memalloc(size_t size)
-{
-	void	*mem;
-
-	mem = (void *)malloc(sizeof(char) * size);
-	if (!(mem))
-		return (0x0);
-	while (size--)
-		((unsigned char *)mem)[size] = 0;
-	return (mem);
-}
-
 int	ft_isdigit(int b)
 {
 	if ((b > 47 && b < 58))
@@ -74,4 +62,15 @@ void	*ft_realloc(void *l, int t)
 	s = ft_memcpy(s, l, sizeof(char) * t);
 	free(l);
 	return (s);
+}
+
+int	ft_isspace(int i)
+{
+	char	c;
+
+	c = (char)i;
+	if (c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r'
+		|| c == ' ')
+		return (1);
+	return (0);
 }
