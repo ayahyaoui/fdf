@@ -11,6 +11,9 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
 #define GRAD_BACK_COL GRADUATION_BACKGROUND_COLOR
 
 void	draw_graduation(t_fdf *fdf, int pos_y, int lim_y, t_option option)
@@ -72,6 +75,19 @@ void	draw_menu_graduation(t_fdf *fdf, t_img *img, const t_menu *type,
 		img->img_ptr, 0, 0);
 }
 
+int verif_image(char title_min[], char title_plus[])
+{
+	int fd;
+
+	fd = open(title_min, O_RDONLY);
+	if (fd < 0 || read(fd, "", 0) < 0)
+		return (-1);
+	fd = open(title_plus, O_RDONLY);
+	if (fd < 0 || read(fd, "", 0) < 0)
+		return (-1);
+	return (1);
+}
+
 int	put_graduation(t_fdf *fdf, char title_min[], char title_plus[], int y)
 {
 	static void		*minus = NULL;
@@ -86,7 +102,7 @@ int	put_graduation(t_fdf *fdf, char title_min[], char title_plus[], int y)
 		mlx_destroy_image(mlx->mlx_ptr, minus);
 		return (mlx_destroy_image(mlx->mlx_ptr, plus));
 	}
-	if (!minus || !plus)
+	if ((!minus || !plus) && verif_image(title_min, title_plus) > 0)
 	{
 		plus = mlx_xpm_file_to_image(mlx->mlx_ptr, (char *)title_plus, &w, &h);
 		minus = mlx_xpm_file_to_image(mlx->mlx_ptr, (char *)title_min, &w, &h);
