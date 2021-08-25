@@ -27,9 +27,7 @@ int	main(int argc, const char *argv[])
 	initialise_fdf(&fdf, &mlx, &main_img, &menu_img);
 	if (!parsing_map(&fdf, argv[1]))
 	{
-		/*
-			free proprement
-		*/
+		process_cleaning(&fdf);
 		printf("FDF: bad format\n");
 		return (1);
 	}

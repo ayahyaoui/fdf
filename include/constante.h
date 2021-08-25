@@ -13,11 +13,11 @@
 #ifndef CONSTANTE_H
 # define CONSTANTE_H
 
-# define ESC 53
+# define ESC 65307
 /*
  * Commente l'ancienne version
  */
-
+/*
 # define LEFT 123
 # define RIGHT 124
 # define DOWN 125
@@ -35,11 +35,10 @@
 # define DEEPER 13
 # define SHALLOWER 7
 # define NEXT_PROJECTION 45
-
+*/
 /*
  * coller les define sous ce commentaire
  */
-/*
 # define LEFT 65361
 # define RIGHT 65363
 # define DOWN 65364
@@ -51,13 +50,12 @@
 # define X_LEFT 49
 # define Y_RIGHT 52
 # define Y_LEFT 51
-# define Z_RIGHT 57
-# define Z_LEFT 56
+# define Z_RIGHT 54
+# define Z_LEFT 53
 # define INFOS 105
 # define DEEPER 112
 # define SHALLOWER 109
 # define NEXT_PROJECTION 110
-*/
 /*
  * coller les define au dessus de ce commentaire
  */

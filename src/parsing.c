@@ -134,11 +134,9 @@ t_fdf	*parsing_map(t_fdf *fdf, const char *file_name)
 {
 	int		fd;
 	char	*line;
-	int		gnl_ret;
 
 	fd = open(file_name, O_RDONLY);
-	gnl_ret = get_next_line2(fd, &line);
-	if (gnl_ret < 0)
+	if (get_next_line2(fd, &line) < 0)
 		return (0x0);
 	fdf->infos.y_max = 1;
 	fdf->original_map = (t_point **) ft_memalloc(sizeof(t_point *)
@@ -154,6 +152,10 @@ t_fdf	*parsing_map(t_fdf *fdf, const char *file_name)
 		fdf->original_map[fdf->infos.y_max - 1] = convert_string_to_points
 			(fdf, line);
 		free(line);
+		if (fdf->infos.y_max > LIMIT_MAP || fdf->infos.x_max > LIMIT_MAP)
+			free(fdf->original_map);
+		if (fdf->infos.y_max > LIMIT_MAP || fdf->infos.x_max > LIMIT_MAP)
+			return (0x0);
 	}
 	fdf->map = create_3d_map(fdf);
 	return (fdf);

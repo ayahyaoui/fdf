@@ -24,13 +24,15 @@ void	draw_menu_background(t_img *img)
 	int		i;
 	int		j;
 
+	printf("%u\n", 127 + (127 << 8) + (127 << 16) + (127 << 24));
 	i = 0;
 	while (i < img->height)
 	{
 		j = 0;
-		while (j < img->size_line)
+		while (j < img->size_line / 4)
 		{
-			img->draw_map[i * img->size_line + j] = 127;
+			put_point_color(img, j, i, set_b(set_g(set_r(0, 42), 42), 42));
+			//img->draw_map[i * img->size_line + j] = 127;
 			j++;
 		}
 		i++;

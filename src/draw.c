@@ -14,6 +14,7 @@
 #include <math.h>
 
 /**
+ * t
 void		put_point_colors(t_mlx *mlx, int x, int y, int color)
 {
 	if (y >= 0 && y < mlx->size_y && x >= 0 && x < mlx->size_x)

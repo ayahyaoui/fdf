@@ -125,10 +125,8 @@ int	process_deep(t_fdf *fdf, int key)
 int	keys_action(int key, void *param)
 {
 	t_fdf	*fdf;
-	t_mlx	*mlx;
 
 	fdf = (t_fdf *)param;
-	mlx = fdf->mlx;
 	if (key == QUIT || key == ESC)
 	{
 		process_cleaning(fdf);
